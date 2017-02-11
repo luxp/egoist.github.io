@@ -1,0 +1,113 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Node.js 模块风格指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link rel="stylesheet" href="https://fonts.css.network/css?family=Droid+Sans"><link href="/css/main.css?v=3.0.0" rel="stylesheet"><link rel="stylesheet" href="/css/solarized.css"><link rel="stylesheet" href="/css/zoom.css"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Node.js 模块风格指南"><meta name="description" content="编写高质量、可复用的 Node.js 模块"><meta name="twitter:description" content="编写高质量、可复用的 Node.js 模块"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li><li class="hide-on-small-screen"><a href="/gf.html">girlfriend wanted</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Node.js 模块风格指南</h2><h2 class="post-subtitle">编写高质量、可复用的 Node.js 模块</h2><script></script><div class="post-content markdown-body"><p>JavaScript 代码一向的特点就是难以维护，保持一个良好的代码、组织风格有助于提升效率、重构代码、添加新功能、单元测试等等。</p>
+<p>我总结了一下写了 200 个 NPM package 之后的一些个人经验和习惯。</p>
+<h2 id="span-初始化一个项目-span"><span>初始化一个项目</span></h2>
+<p>不再使用 <code>npm init</code>。因为除了 <code>package.json</code> 还有一些额外的配置文件，比如 <code>circle.yml</code>、<code>.editorconfig</code>、<code>LICENSE</code> 、<code>README.md</code> 等等。</p>
+<p>使用 <a href="http://yeoman.io" target="_blank" rel="external">yeoman</a>。如果你喜欢在代码中使用分号和用 travis 来测试，推荐 <a href="https://github.com/sindresorhus" target="_blank" rel="external">sindresorhus</a> 用的 <a href="https://github.com/sindresorhus/generator-nm" target="_blank" rel="external">generator-nm</a>。如果你不喜欢分号并且用 circle 来测试，推荐我用的 <a href="https://github.com/egoist/generator-esnm" target="_blank" rel="external">generator-esnm</a>。</p>
+<p>想要定制你的 <a href="http://README.md" target="_blank" rel="external">README.md</a> ? <a href="https://github.com/IonicaBizau/blah" target="_blank" rel="external">blah</a> 可以为你定制生成 <a href="http://README.md" target="_blank" rel="external">README.md</a> 以及更多提升效率的功能。</p>
+<h2 id="span-注释-span"><span>注释</span></h2>
+<p>每一个具有单独意义的代码片段前都推荐写注释，就算再简单的代码你隔几天看也不可能一秒看出它在干什么，而有了注释就可以。对于复杂且意义重大的代码尽量写完整的 jsdoc 来说明。</p>
+<p>另一个原因就是这样可以让你的代码显得更格式化，代码挤在一堆很傻且不美观。而且你也可以自动从你代码的 jsdoc 生成 api doc！</p>
+<pre><code class="language-js">/**	
+ * Module dependencies
+ */
+const path = require('path')
+
+/**
+ * Reverse array but not change itself
+ *
+ * @param {Array} names
+ * @return {Array}
+ */
+function rev(names) {
+	return names.concat().reverse()
+}
+</code></pre>
+<h2 id="span-编写可复用模块-span"><span>编写可复用模块</span></h2>
+<p>对于一个项目中多次使用（&gt;1）的代码，推荐放入单独的文件作为模块使用。<br>
+对于更为通用的代码尽量打包进一个单独的 npm module 来使用。</p>
+<h2 id="span-代码风格指南-span"><span>代码风格指南</span></h2>
+<p>对于分号的问题不作讨论，加不加都行。</p>
+<p>对于异步代码，尽量不要使用 callback 而是改成 Promise，并且把 HTTP 请求封装进单独的模块，这样更方便配合 <a href="https://github.com/tj/co" target="_blank" rel="external">co</a> 来使用。</p>
+<pre><code class="language-js">// fetchData.js
+// 老式回调风格
+const request = require('superagent')
+
+module.exports = function (callback) {
+	request
+		.get('xxx.json')
+		.end((err, res) =&gt; {
+			callback(res)
+		})
+}
+// app.js
+// 调用它
+const fetchData = require('./fetchData')
+
+module.exports = function () {
+	fetchData(data =&gt; {
+		console.log(data)
+	})
+}
+
+// fetchData.js
+// 无阻塞同步代码风格
+const fetch = require('node-fetch')
+
+module.exports = co.wrap(function* () {
+	const data = yield fetch('xxx.json')
+		.then(data =&gt; data.json())
+	return data
+})
+// app.js
+// 调用它
+const fetchData = require('./fetchData')
+
+module.exports = co.wrap(function* () {
+	const data = yield fetchData()
+	console.log(data)
+})
+</code></pre>
+<p><strong>还使用 co? 不是有 async/await 吗?</strong></p>
+<p>在 async/await 没被 v8 引擎实现之前用 co 都还是第一选择，除非某些情况你使用了 babel 那你可以考虑使用 async/await。不过即使现在用 co 在将来 async/await api 被实现的时候也能轻松地迁移过去。</p>
+<blockquote>
+<p>co is a stepping stone towards ES7 async/await – TJ Holowaychuk</p>
+</blockquote>
+<h2 id="span-eslint-span"><span>ESLint</span></h2>
+<p>保持良好代码风格的方法之一就是 lint 你的代码，选择你习惯的代码风格，用编辑器实时 lint 或者添加一些 git hook 在 commit 的时候 lint 也可以。</p>
+<p>我目前使用 <a href="https://github.com/sindresorhus/xo" target="_blank" rel="external">xo</a> 来检测代码，它默认无需配置但你可以根据你的喜好调整，基于 ESLint 。如果你喜欢这个风格也可以直接在 ESlint 中使用它的<a href="https://github.com/sindresorhus/eslint-config-xo" target="_blank" rel="external">配置文件</a>。</p>
+<h2 id="span-测试-span"><span>测试</span></h2>
+<p>写测试是很有趣的，当且仅当你用 <a href="https://github.com/sindresorhus/ava" target="_blank" rel="external">AVA</a> 的时候。</p>
+<p><img src="https://camo.githubusercontent.com/fc55513ee5cb412b2b0d1540032b602ed0142dbe/68747470733a2f2f63646e2e7261776769742e636f6d2f73696e647265736f726875732f6176612f666531636561316361336432633835313863306363333965633862653539326265616239303535382f6d656469612f6c6f676f2e737667" alt="ava"></p>
+<p>我使用 AVA 的主要原因是:</p>
+<ul>
+<li>很快</li>
+<li>语法简洁</li>
+<li>内置 ES2015/2016</li>
+<li>many more…</li>
+</ul>
+<h2 id="span-commit-span-风格"><span>Commit</span> 风格</h2>
+<p>不使用没有意义的 Commit 信息，比如单纯只写个 <code>fix</code>、<code>update</code>、<code>change</code>。</p>
+<p>尽量描述你干了什么事:</p>
+<pre><code class="language-bash">git commit -m &quot;fix tweak on ie9&quot;
+git commit -m &quot;release 0.0.1&quot;
+git commit -m &quot;refactor to use es2015&quot;
+git commit -m &quot;🔥&quot;
+</code></pre>
+<p>更好的做法是使用 <a href="https://github.com/commitizen/cz-cli" target="_blank" rel="external">commitizen</a> 来规范你的 commit message 格式。</p>
+<p><img src="https://github.com/commitizen/cz-cli/raw/master/meta/screenshots/add-commit.png" alt="commitizen"></p>
+<h2 id="span-semantic-release-span"><span>Semantic-Release</span></h2>
+<p>发布 NPM 模块是很让人困扰的一步，你需要手动 bump version，需要执行 <code>npm test</code> 来看是否有错，然后再手动执行 <code>npm publish</code>，这些步骤可以被规范且自动化。</p>
+<p>使用 <a href="https://github.com/semantic-release/semantic-release" target="_blank" rel="external">semantic-release</a> 可以自动分析你的 commit message 然后根据这些推测你的代码改动来进行语义化的版本号升级并自动更新 changelog，<a href="https://github.com/egoist/tooling/releases" target="_blank" rel="external">这些</a> 就是自动生成的。</p>
+<h2 id="span-2016-span"><span>2016</span></h2>
+<p>200 more modules? Exciting! ✨</p>
+</div><div id="disqus_thread" class="disqus"></div><script>window.isPost = true;
+var disqus_config = function () {
+  this.page.url = 'https://egoistian.com/2016/01/29/node-js-module-style-guide/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '2016/01/29/node-js-module-style-guide/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a href="https://github.com/egoist/blog/blob/master/source/_posts/node-js-module-style-guide.md">源代码地址</a> 修改或者 <a href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hide-on-mobile">CC BY-NC-ND 4.0</a><span class="hide-on-mobile">&nbsp;</span><span>&copy;&nbsp;</span><a href="https://github.com/egoist">E.Z.</a><span class="hide-on-mobile">&nbsp;</span><a href="https://github.com/egoist/blog" class="hide-on-mobile">Read the source code.</a></div></footer><div style="display:none"></div><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54857209-6', 'auto');
+ga('send', 'pageview');</script><script src="/js/highlight.min.js"></script><script src="/js/zoom.js"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=3.0.0"></script></body></html>
