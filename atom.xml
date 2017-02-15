@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://egoistian.com/"/>
-  <updated>2017-02-11T12:16:15.000Z</updated>
+  <updated>2017-02-15T15:52:33.000Z</updated>
   <id>https://egoistian.com/</id>
   
   <author>
@@ -14,6 +14,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vbuild</title>
+    <link href="https://egoistian.com/2017/02/15/vbuild/"/>
+    <id>https://egoistian.com/2017/02/15/vbuild/</id>
+    <published>2017-02-15T11:36:26.000Z</published>
+    <updated>2017-02-15T15:52:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>I’m very proud to announce <a href="https://github.com/egoist/vbuild" target="_blank" rel="external">vbuild 6</a>, an opinionated but configurable Webpack wrapper for bundling front-end Vue.js apps, allowing you to use Webpack like a pro! No decision-making while reducing boilerplate code, solving problems like when to split vendor code, how to manage static files, CSS extracting et al.</p>
+<p>To start using, all you need is to write your app directly, let’s say <code>index.js</code>:</p>
+<pre><code class="language-jsx">import Vue from 'vue'
+
+new Vue({
+  el: '#app',
+  render: h =&gt; &lt;h1&gt;Hello World!&lt;/h1&gt;
+})
+</code></pre>
+<p>Without <code>vbuild</code>, you need to create a <code>webpack.config.js</code> with a lot of boilerplate code, and installed many dev dependencies in <code>package.json</code>, which is very verbose to perform.</p>
+<p>Now we can run a single command <code>vbuild --dev</code> to replace the process above.</p>
+<p>This blog post will go into the philosophy and design decisions of the project. To learn how to use vbuild instead, please refer to the <a href="https://github.com/egoist/vbuild#readme" target="_blank" rel="external">README</a>, where you can learn the entirety of the tool’s capabilities in just a few minutes.</p>
+<p>First we’ll dive into the <a href="#background">background</a> of this project.</p>
+<h2 id="background">Background</h2>
+<p>In the past few years, bundlers like Webpack and browserify have taken over the market. Before that, Gulp had just made some progress in the process of replacing Grunt as the major build tool of front-end assets.</p>
+<p>The main reason that Gulp is replacing Grunt is the <strong>simplicity</strong> in my opinion. Who knows that I had been using PHP for years before meeting Node.js, developing and deploying PHP apps is that stupidly fast and easy.</p>
+<p>Since then, I’ve made my mind that I want to develop JavaScript apps in a simple way. At the same way, I did fall in love with <a href="https://github.com/sindresorhus/xo" target="_blank" rel="external">XO</a>, which is an ESLint wrapper that reduces the overhead of managing config files. vbuild is to Webpack as XO is to ESLint.</p>
+<h2 id="why-vue-js">Why Vue.js</h2>
+<p>There’re similar tools like <a href="https://github.com/insin/nwb" target="_blank" rel="external">nwb</a> or <a href="https://github.com/facebookincubator/create-react-app" target="_blank" rel="external">create-react-app</a>, but vbuild is mainly for Vue.js.</p>
+<p>Despiting that vbuild have extra support for Vue’s single-file component, it actually works for all kinds of JavaScript frameworks! The <strong>no-config</strong> feature works better in Vue.js apps though.</p>
+<p>Have to note that, Vue.js itself is getting well with the idea <strong>no-config</strong>, you can use it directly in a <code>index.html</code> file, or work with any bundler, out-of-box nice development experience, hot-code reloading support, officially maintained router and state-managament library.</p>
+<h2 id="future">Future</h2>
+<p>I do have some exciting future plans for vbuild, like <a href="https://github.com/egoist/vbuild/issues/112" target="_blank" rel="external">server-side rendering support</a> (I know there’s Nuxt.js already) and better testing experience for Vue.js app.</p>
+<p>Currently you can see vbuild’s <code>run</code> option, which allows you to perform custom build process instead of running webpack:</p>
+<pre><code class="language-js">module.exports = {
+  run(webpackConfig) {
+    // Your custom logic...
+  }
+}
+</code></pre>
+<p>If you’re interested in contributing, please join the party, check out the <a href="https://github.com/egoist/vbuild/issues" target="_blank" rel="external">issue tracker</a> or contact me personally on Twitter <a href="https://twitter.com/rem_rin_rin" target="_blank" rel="external">@rem_rin_rin</a>.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;I’m very proud to announce &lt;a href=&quot;https://github.com/egoist/vbuild&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;vbuild 6&lt;/a&gt;, an opinionated but con
+    
+    </summary>
+    
+    
+      <category term="vue" scheme="https://egoistian.com/tags/vue/"/>
+    
+      <category term="webpack" scheme="https://egoistian.com/tags/webpack/"/>
+    
+  </entry>
   
   <entry>
     <title>风夏的前世今生</title>
@@ -997,107 +1050,6 @@ $ git push server master
     
     
       <category term="life" scheme="https://egoistian.com/tags/life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>二〇一六年的前端入门指南</title>
-    <link href="https://egoistian.com/2016/02/06/2016-front-end-primer/"/>
-    <id>https://egoistian.com/2016/02/06/2016-front-end-primer/</id>
-    <published>2016-02-06T07:10:05.000Z</published>
-    <updated>2016-10-02T05:05:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>年初在 V2EX 看到很多人发帖问前端如何入门，我姑且来分享一下我的经验。</p>
-<p>或许你不知道我是谁，不过如果你对前端有兴趣，都可以联系我帮你 Review 代码、提供改进建议，这有我的 <a href="https://github.com/egoist" target="_blank" rel="external">GitHub</a> 地址。</p>
-<p>我假设阅读者只了解过简单的 HTML/CSS。</p>
-<h2 id="span-html-span"><span>HTML</span></h2>
-<p>HTML 没有了 CSS 就什么都不是，它相当于给网页各个区域命名，然后让你可以进行更多的操作。比如头部导航栏，你经常会给它起个名字叫 <code>header</code>。</p>
-<h2 id="span-css-span"><span>CSS</span></h2>
-<p>CSS 是层叠样式表（Cascading Style Sheets）的缩写，它是用来定义你的 HTML 的展现形式的一种语言。比如让你的 HTML 里的文字显示不同字体，一个元素显示不同的高度。</p>
-<h2 id="span-html-css-span"><span>HTML+CSS</span></h2>
-<p>HTML 和 CSS 都是语法非常<strong>松散</strong>的语言，这样的导致了它们入门非常简单，然而一旦代码量变大维护就会很困难。</p>
-<h3 id="模板引擎">模板引擎</h3>
-<p>假设你有两个网页，它们共用一个导航栏（header），然后只有主体（content）部分显示不同的内容，在已有知识背景下你只能做两个网页，把导航栏的代码复制两次。</p>
-<p>于是有了模板引擎，比如 <a href="https://github.com/pugjs/jade/blob/master/Readme_zh-cn.md" target="_blank" rel="external">jade</a>，他可以让你复用重复的模板，减少代码量，提高可维护性。</p>
-<h3 id="css-处理器">CSS 处理器</h3>
-<p>看下面这段代码:</p>
-<pre><code class="language-css">.post {
-	font-size: 14px;
-	-webkit-box-shadow: 0 0 1px #ccc;
-	-moz-box-shadow: 0 0 1px #ccc;
-	box-shadow: 0 0 1px #ccc;
-}
-
-.post .post-content {
-	font-size: 16px;
-}
-
-.post .post-content .post-date {
-	color: #999;
-}
-</code></pre>
-<p>你会发现上面的 <code>box-shadow</code> 写了三次，以便支持不同内核浏览器下的 <code>box-shadow</code> 这个属性。</p>
-<p>还有随着代码量增大像 <code>.post .post-content .post-date</code> 这样长的定义会越来越长。</p>
-<p>这是有了 CSS 处理器之后的代码:</p>
-<pre><code class="language-css">.post {
-	font-size: 14px;
-	box-shadow: 0 0 1px #ccc;
-	.content {
-		font-size: 16px;
-		.date {
-			color: #999;
-		}
-	}
-}
-</code></pre>
-<p>嵌套的风格让作用域更清晰，你同时可以尽可能地只用标准的 CSS 属性然后让 CSS 处理器帮你兼容其它浏览器。推荐使用 <a href="https://github.com/postcss/postcss" target="_blank" rel="external">PostCSS</a>，它本身并不改变你的 CSS 代码，但它把你的代码抽象成一个 JavaScript 对象让你能够通过插件来随心所欲地进行操作，比如实现嵌套风格以及自动加 <code>-moz</code> <code>-webkit</code> 这些前缀。你可以自己写插件同时它已经有大量<a href="https://github.com/postcss/postcss/blob/master/docs/plugins.md" target="_blank" rel="external">现成的插件</a>供你使用。</p>
-<p>要记住的是，它只是将你<strong>自定义的 CSS 风格</strong>转换成符合浏览器标准的 CSS，至于为什么？标准的 CSS 不够好用呗，比如刚才遇到的问题。</p>
-<h2 id="span-html-css-小结-span"><span>HTML+CSS 小结</span></h2>
-<p>现在你知道了 HTML/CSS 在一起使用的时候能干什么，也知道了用模板引擎、CSS 处理器可以让你更好地写 HTML/CSS。要记住，「更好」也许只是在代码量增大的情况下更明显。</p>
-<p>那么这些模板引擎和 CSS 处理器是怎么实现的？很多都是用的 JavaScript。</p>
-<p>推荐阅读: <a href="http://learn.shayhowe.com/html-css/" target="_blank" rel="external">Learn to Code HTML &amp; CSS</a> 正如其松散的特性一样，你需要多使用才能更好地掌握用法。</p>
-<h2 id="span-javascript-span"><span>JavaScript</span></h2>
-<p>JavaScript 是一门真正的语言，它简单且强大。（以下简称 JS）</p>
-<p>正如 HTML/CSS 是用于网页的样式呈现，JS （在过去）则是用于网页的交互操作上，比如用户点击了一个按钮然后弹出一个框，这些需要 JS 完成。</p>
-<p>JS 本身并不具有「监听用户点击」这一功能，在浏览器上，现代浏览器都内置了网页 DOM API，它提供了一套 JS 接口，让你可以用 JS 调用来实现相应功能，而这些功能本身是基于更低级的 C/C++ 语言实现的。</p>
-<p>因此，一名及格的前端需要掌握 JS 的基础，比如变量、数组、函数这些几乎所有语言都有的特性，然后就是 DOM API，缺了这个实现网页交互就是纸上谈兵。</p>
-<p>推荐阅读: <a href="https://developer.mozilla.org/zh-CN/docs/Web/API" target="_blank" rel="external">MDN Web API</a> 非常全，需要更渐进的指南建议 Google。</p>
-<p>至于学习 JS 这门语言，推荐三本众所周知的，你并不需要全部都看，挑一本或两本尽量搞清楚就行了:</p>
-<ul>
-<li><a href="https://book.douban.com/subject/10549733/" target="_blank" rel="external">JavaScript 权威指南</a></li>
-<li><a href="https://book.douban.com/subject/10546125/" target="_blank" rel="external">JavaScript 高级程序设计</a></li>
-<li><a href="http://book.douban.com/subject/3590768/" target="_blank" rel="external">JavaScript 语言精粹</a></li>
-</ul>
-<h2 id="span-node-js-span"><span>Node.js</span></h2>
-<p>刚才说过，过去的 JS 就是 JS 本身加上浏览器的 DOM API，于是就有人想到了：能不能把浏览器 DOM API 换成用户操作系统的 API？这样 JS 看起来就更像一门「真正的语言」，即可以在用户本地环境而不只是在浏览器中运行。</p>
-<p>幸好，谷歌浏览器（Chrome）使用的 JavaScript 运行环境（v8）发展到近几年已经能非常快地将 JS 代码转为机器码，于是 Node.js 的先驱们就成立了这个组织，基于 Chrome v8 引擎实现了一个跨平台 JavaScript 运行环境 —— 即现在非常流行的 Node.js。</p>
-<hr>
-<p>这样的感觉是不是很好? JavaScript 开发者的工具也能用 JavaScript 开发了！这才是副标题里描述的「easy and powerful」的前提。</p>
-<h3 id="如何学习-node-js">如何学习 Node.js</h3>
-<p>大同小异，如果你在之前知道了如何学习 JavaScript。无非是 JS 本身加上 Node.js 提供的 API 而已。你可以直接打开 Node.js 官网查看其 API。</p>
-<p>Node.js 只是一个运行环境，类似于 Java 的 JVM，最重要的还是 JavaScript 本身。</p>
-<h2 id="span-es6-span"><span>ES6</span></h2>
-<p>很大的可能你现在都是在用 ES5 标准的 JavaScript 语法，而 ES6 则是 TC39(负责制定 JavaScript 语言标准的机构) 在 2015 年新推出的语言标准。</p>
-<p><strong>为什么我要学新的 ES6 标准?</strong></p>
-<ul>
-<li>你不必。因为 ES6 及以后的任何一个新的 JS 标准都是向后兼容的，也就是说任何你现在写的代码也是符合未来版本的 JS 的标准的。</li>
-<li>为什么不？试试又不会怀孕，而且你会有眼前一亮的感觉。任何语言都是在进化的，特别是前端发展那么快。</li>
-</ul>
-<p>说得差不多了，不过你可能奇怪为什么不介绍如何学习一些 JS 框架呢？比如 jQuery、Angular、React、Vue 这些。</p>
-<p>OK，下期就是这些框架的介绍，同时以后会介绍一些构建工具和其它相关内容。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;年初在 V2EX 看到很多人发帖问前端如何入门，我姑且来分享一下我的经验。&lt;/p&gt;
-&lt;p&gt;或许你不知道我是谁，不过如果你对前端有兴趣，都可以联系我帮你 Review 代码、提供改进建议，这有我的 &lt;a href=&quot;https://github.com/egoist&quot; tar
-    
-    </summary>
-    
-    
-      <category term="javascript" scheme="https://egoistian.com/tags/javascript/"/>
-    
-      <category term="frontend" scheme="https://egoistian.com/tags/frontend/"/>
     
   </entry>
   
