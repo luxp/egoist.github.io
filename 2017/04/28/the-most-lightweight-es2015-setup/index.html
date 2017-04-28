@@ -1,0 +1,85 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>最轻量的 ES2015 编译配置</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.2.2" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.2.2"><link rel="stylesheet" href="/css/zoom.css?v=4.2.2"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="最轻量的 ES2015 编译配置"><meta name="description" content="Sometimes Babel, Sometimes Buble."><meta name="twitter:description" content="Sometimes Babel, Sometimes Buble."></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">最轻量的 ES2015 编译配置</h2><h2 class="post-subtitle">Sometimes Babel, Sometimes Buble.</h2><script></script><div class="post-content markdown-body"><h2 id="用-buble-替换-babel">用 Buble 替换 Babel</h2>
+<p><a href="http://babeljs.io/" target="_blank" rel="external">Babel</a> 可以说是编译 ES2015+ 代码到 ES5 的首要选择，它的可扩展性很高，基于插件几乎能做任何事。</p>
+<p>而 <a href="https://buble.surge.sh/guide/" target="_blank" rel="external">Buble</a> 则去掉了这种可扩展性，只会转换能够用 ES5 实现并保证性能的新特性，同时这样也让你免去配置的步骤。</p>
+<p>对于下面这段代码，你可以通过编译结果看出它们设计上的不同:</p>
+<pre><code class="language-js">class Foo {
+  constructor() {
+    this.pos = 0
+  }
+
+  say(word) {
+    return `hello ${world}`
+  }
+
+  walk() {
+    this.pos++
+  }
+}
+</code></pre>
+<p>Babel 的结果:</p>
+<pre><code class="language-js">&quot;use strict&quot;;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (&quot;value&quot; in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(&quot;Cannot call a class as a function&quot;); } }
+
+var Foo = function () {
+  function Foo() {
+    _classCallCheck(this, Foo);
+
+    this.pos = 0;
+  }
+
+  _createClass(Foo, [{
+    key: &quot;say&quot;,
+    value: function say(word) {
+      return &quot;hello &quot; + world;
+    }
+  }, {
+    key: &quot;walk&quot;,
+    value: function walk() {
+      this.pos++;
+    }
+  }]);
+
+  return Foo;
+}();
+</code></pre>
+<p>Buble 的结果:</p>
+<pre><code class="language-js">var Foo = function Foo() {
+  this.pos = 0
+};
+
+Foo.prototype.say = function say (word) {
+  return (&quot;hello &quot; + world)
+};
+
+Foo.prototype.walk = function walk () {
+  this.pos++
+};
+</code></pre>
+<p>总的来说 Buble 的结果可读性更强、更简洁，而且设计初衷就是为了不引入 <code>_createClass</code> 之类的 runtime。</p>
+<h2 id="async-await-和-generator-函数">async/await 和 generator 函数</h2>
+<p>Buble 暂时不支持编译 async/await 和 generator 函数，目前有以下几个工具作为替代:</p>
+<ul>
+<li><a href="https://github.com/MatAtBread/nodent" target="_blank" rel="external">nodent</a> (性能比 babel-plugin-tranform-async-to-generator 更好)</li>
+<li><a href="https://github.com/leebyron/async-to-gen" target="_blank" rel="external">async-to-gen</a> (不支持编译 generator)</li>
+</ul>
+<p>我一般会将 Rollup、Buble 以及 async-to-gen 配合使用:</p>
+<pre><code class="language-js">// rollup.config.js
+export default {
+  plugins: [
+    require('rollup-plugin-async')(),
+    require('rollup-plugin-buble')()
+  ]
+}
+</code></pre>
+<p>其实由于在开发 web app 的时候基本还是用 webpack 为主而且又是对 ES features 的需求不止于 ES2015，这个时候我一般还是选择用 Babel 编译。</p>
+<p>而对于可复用的 library，不太需要 async/await 或者只是针对 Node.js 环境的时候，使用 Buble 还是很理想的。</p>
+</div><div id="disqus_thread" class="disqus"></div><script>window.isPost = true;
+var disqus_config = function () {
+  this.page.url = 'https://egoistian.com/2017/04/28/the-most-lightweight-es2015-setup/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '2017/04/28/the-most-lightweight-es2015-setup/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/the-most-lightweight-es2015-setup.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hide-on-mobile">CC BY-NC-ND 4.0</a><span class="hide-on-mobile">&nbsp;</span><span>&copy;&nbsp;</span><a href="https://github.com/egoist">E.Z.</a><span class="hide-on-mobile">&nbsp;</span><a href="https://github.com/egoist/blog" class="hide-on-mobile">Read the source code.</a></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-54857209-6', 'auto');
+ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.2.2"></script><script src="/js/zoom.js?v=4.2.2"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.2.2"></script></body></html>
