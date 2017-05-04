@@ -20,7 +20,7 @@
         this.sending = true
         this.error = ''
         this.success = ''
-        if (!this.validData()) { return }
+        if (!this.validData()) return
         axios.post('https://mailto.leanapp.cn/api/send', this.message)
           .then(function (response) {
             this.sending = false
@@ -38,13 +38,11 @@
           }.bind(this))
       },
       validData: function () {
-        var this$1 = this;
-
         for (var key in this.message) {
-          if (!this$1.message[key]) {
-            this$1.error = 'Form data is not complete!'
-            this$1.success = ''
-            this$1.sending = false
+          if (!this.message[key]) {
+            this.error = 'Form data is not complete!'
+            this.success = ''
+            this.sending = false
             return false
           }
         }
