@@ -1,0 +1,97 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>新世纪福音脚手架</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.2.3" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.2.3"><link rel="stylesheet" href="/css/zoom.css?v=4.2.3"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="新世纪福音脚手架"><meta name="description" content="好的作品不在于其形式，重要的是内容，我的很多音乐作品都是没有名字的，然而没有名字的东西无法商业流通，所以你才会看到我那些没有特殊意义、单纯靠滚键盘得到的名字。 —— 泽野弘之曾经这样说过(其实并没有)"><meta name="twitter:description" content="好的作品不在于其形式，重要的是内容，我的很多音乐作品都是没有名字的，然而没有名字的东西无法商业流通，所以你才会看到我那些没有特殊意义、单纯靠滚键盘得到的名字。 —— 泽野弘之曾经这样说过(其实并没有)"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">新世纪福音脚手架</h2><script></script><div class="post-content markdown-body"><p>好的作品不在于其形式，重要的是内容，我的很多音乐作品都是没有名字的，然而没有名字的东西无法商业流通，所以你才会看到我那些没有特殊意义、单纯靠滚键盘得到的名字。 —— <a href="http://music.163.com/#/artist?id=15290" target="_blank" rel="external">泽野弘之</a>曾经这样说过(其实并没有)。</p>
+<p>这篇文章也是这个道理，想介绍一下我在半年前开始做的脚手架工具。给文章起标题也是一件很困难的事，最开始想到的是「史上最优雅的脚手架工具」、「来自未来的脚手架」，不过这些未免显得太标题党了，华而不实我自己都很尴尬。最近我刚好做了个<a href="https://github.com/egoist/evangelion-card" target="_blank" rel="external">新世纪福音战士标题卡生成器</a>，于是就随机将几个关键词组合在一起 —— <strong>新世纪福音脚手架</strong>，意外地显得还不错。</p>
+<p><img src="https://ooo.0o0.ooo/2017/05/21/5921898822cae.png" alt="sao"></p>
+<p><strong>为了不让你对标题不明所以，简单地说明了它的来历，以下才是正文。</strong></p>
+<h2 id="脚手架">脚手架</h2>
+<p>经常造轮子就会发现脚手架的重要性，这也是为什么 Yeoman 的发明者之一是 <a href="https://github.com/sindresorhus" target="_blank" rel="external">@sindresorhus</a> 的原因。后者已经在 npm 上发布了<a href="https://www.npmjs.com/~sindresorhus" target="_blank" rel="external">超过 1000 个模块</a>，很难后有来者了。</p>
+<p>Yeoman 十分健壮，生态繁荣，然而要写<a href="https://github.com/sindresorhus/generator-nm/blob/master/app/index.js" target="_blank" rel="external">一个 generator 的复杂度</a>可写普通的代码几乎是差不多的，而我在尽可能减少思考的时候就想减少思考，vue-cli 的思路很好地解决了我向减少思考的诉求，一个 generator 中间生成文件的过程有很多步骤是可以自动解决的。</p>
+<p>vue-cli 虽然名字里有 vue 属性，但是作为任意类型项目的脚手架工具都是可以的，尽管运行 <code>vue init react</code> 这样的命令会显得有些奇怪。这也是为什么我做了 <a href="https://github.com/egoist/sao" target="_blank" rel="external">SAO</a> 的原因，一个类似 vue-cli 的脚手架工具。在拥有 vue-cli 的功能的同时，它也能像 Yeoman 一样用 npm package 作为模板并支持测试。</p>
+<p>举个例子，在运行 <code>sao vue</code> 的时候，如果 template-vue 这个 npm 模块没有全局安装，它会提示你安装，之后再使用模板根目录里的配置文件 <code>sao.js</code> 将同目录里的 <code>template/</code> 中的文件生成到 <code>process.cwd()</code> 即当前目录。如果不存在配置文件，那么只会当成一个普通的目录，简单地复制粘贴到当前目录。</p>
+<p>📄 <strong>template-vue/sao.js:</strong></p>
+<pre><code class="language-js">module.exports = {
+  // 从用户获取一些信息
+  prompts: {
+    pwa: {
+      type: 'confirm',
+      message: 'Add Progressive Web App support',
+      default: true
+    }
+  },
+  // 如果要发布到 npm
+  // .gitignore 会自动被 npm 更名为 .npmignore
+  // 为了避免这种情况需要起个另外的名字
+  // 然后在生成的时候改名为 .gitignore
+  move: {
+    gitignore: '.gitignore'
+  },
+  // 只在用户确认了 pwa 选项的时候生成 pwa.js
+  filters: {
+    'pwa.js': 'pwa'
+  }
+}
+</code></pre>
+<p>上面的这个配置文件满足了大部分脚手架的需求，即从用户获取信息 --&gt; 根据此信息生成需要的文件。而且几乎与代码无关，这个配置文件完全是由<strong>数据</strong>组成的，只不过刚好是以 JS 对象的格式。</p>
+<p><img src="https://ooo.0o0.ooo/2017/05/21/59218de93485b.png" alt="preview"></p>
+<p>SAO 接收的第一个参数可以是:</p>
+<ul>
+<li>本地模板路径，比如 <code>./my-template</code> <code>/path/to/my-template</code>。</li>
+<li>GitHub 项目缩略名，比如 <code>egoist/template-vue</code>。</li>
+<li>npm 模块名(自动加上 <code>template-</code> 前缀)，比如 <code>vue</code> 将会使用 npm 上的 <code>template-vue</code> 这个包。</li>
+</ul>
+<p>而第二个参数是可选的，不存在时将会生成文件到工作区目录（当前目录），否则将会生成到指定的文件夹中。</p>
+<h2 id="测试脚手架">测试脚手架</h2>
+<p>当脚手架变得复杂，你需要系统地测试以便让其在各种情况下都能生成正确的文件。对于一个脚手架，能从用户影响到它的变量只有 <code>prompts</code> 这个参数，也就是从用户获取的信息。而 SAO 的测试也主要是围绕这个来的，你可以模拟用户输入来检测生成结果。</p>
+<p>📄 <strong>template-vue/test.js:</strong></p>
+<pre><code class="language-js">import test from 'ava'
+import sao from 'sao'
+
+test('generate pwa entry', async t =&gt; {
+  const template = process.cwd() // 模板根目录
+  const res = await sao.mockPrompt(template, {
+    // 模拟的 prompts 数据
+    // 默认使用 `prompts` 中的默认值
+    // 在上面的 `sao.js` 中 `pwa` 默认为 `true`
+  })
+  t.true(res.fileList.includes('pwa.js'))
+})
+
+test('ignore pwa entry', async t =&gt; {
+  const template = process.cwd() // 模板根目录
+  const res = await sao.mockPrompt(template, {
+    pwa: false
+  })
+  t.false(res.fileList.includes('pwa.js'))
+})
+</code></pre>
+<p>这里的 <code>res.fileList</code> 生成的文件列表，形如:</p>
+<pre><code class="language-js">[
+  '.gitignore',
+  'pwa.js',
+  'src/index.js'
+]
+</code></pre>
+<p>以及 <code>res.files</code>，包含了生成文件的信息:</p>
+<pre><code class="language-js">{
+  '.gitignore': {
+    contents: Buffer,
+    stats: {}, // fs.Stats,
+    path: '/absolute/path/to/this/file'
+  },
+  // ...
+}
+</code></pre>
+<h2 id="最后">最后</h2>
+<p>分享几个我自己经常使用的模板:</p>
+<ul>
+<li><a href="https://github.com/egoist/template-nm" target="_blank" rel="external">template-nm</a>: 生成一个 npm 模块，我的所有模块都是用这个生成的。</li>
+<li><a href="https://github.com/egoist/template-vue" target="_blank" rel="external">template-vue</a>: 生成一个<em>几乎</em>无需配置的 Vue 项目，基于 <a href="https://poi.js.org" target="_blank" rel="external">Poi</a>。</li>
+<li><a href="https://github.com/egoist/awesome-sao" target="_blank" rel="external">awesome-sao</a>: 相关 SAO 资源。</li>
+</ul>
+<p>关于更多 SAO 的使用方法和配置文件参数，可以访问 <a href="https://sao.js.org" target="_blank" rel="external">https://sao.js.org</a> :P 虽然本文标题是新世纪福音战士，但 SAO 显然是来源于 <a href="https://zh.moegirl.org/zh-hans/%E5%88%80%E5%89%91%E7%A5%9E%E5%9F%9F" target="_blank" rel="external">Sword Art Online</a> 的。</p>
+</div><div id="disqus_thread" class="disqus"></div><script>window.isPost = true;
+var disqus_config = function () {
+  this.page.url = 'https://egoistian.com/2017/05/21/neon-genesis-scaffolding-tool/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '2017/05/21/neon-genesis-scaffolding-tool/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/neon-genesis-scaffolding-tool.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hide-on-mobile">CC BY-NC-ND 4.0</a><span class="hide-on-mobile">&nbsp;</span><span>&copy;&nbsp;</span><a href="https://github.com/egoist">E.Z.</a><span class="hide-on-mobile">&nbsp;</span><a href="https://github.com/egoist/blog" class="hide-on-mobile">Read the source code.</a></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-54857209-6', 'auto');
+ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.2.3"></script><script src="/js/zoom.js?v=4.2.3"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.2.3"></script></body></html>
