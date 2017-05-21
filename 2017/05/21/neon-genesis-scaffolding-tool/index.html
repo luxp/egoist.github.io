@@ -4,7 +4,7 @@
 <p><strong>为了不让你对标题不明所以，简单地说明了它的来历，以下才是正文。</strong></p>
 <h2 id="脚手架">脚手架</h2>
 <p>经常造轮子就会发现脚手架的重要性，这也是为什么 Yeoman 的发明者之一是 <a href="https://github.com/sindresorhus" target="_blank" rel="external">@sindresorhus</a> 的原因。后者已经在 npm 上发布了<a href="https://www.npmjs.com/~sindresorhus" target="_blank" rel="external">超过 1000 个模块</a>，很难后有来者了。</p>
-<p>Yeoman 十分健壮，生态繁荣，然而要写<a href="https://github.com/sindresorhus/generator-nm/blob/master/app/index.js" target="_blank" rel="external">一个 generator 的复杂度</a>可写普通的代码几乎是差不多的，而我在能尽可能减少思考的时候就想减少思考，vue-cli 的思路很好地解决了我向减少思考的诉求，一个 generator 中间生成文件的过程有很多步骤是可以自动解决的。</p>
+<p>Yeoman 十分健壮，生态繁荣，然而要写<a href="https://github.com/sindresorhus/generator-nm/blob/master/app/index.js" target="_blank" rel="external">一个 generator 的复杂度</a>可写普通的代码几乎是差不多的，而我在能尽可能减少思考的时候就想减少思考，vue-cli 的思路很好地解决了我想减少思考的诉求，一个 generator 中间生成文件的过程有很多步骤是可以自动解决的。</p>
 <p>vue-cli 虽然名字里有 vue 属性，但是作为任意类型项目的脚手架工具都是可以的，尽管运行 <code>vue init react</code> 这样的命令会显得有些奇怪。这也是为什么我做了 <a href="https://github.com/egoist/sao" target="_blank" rel="external">SAO</a> 的原因，一个类似 vue-cli 的脚手架工具。在拥有 vue-cli 的功能的同时，它也能像 Yeoman 一样用 npm package 作为模板并支持测试。</p>
 <p>举个例子，在运行 <code>sao vue</code> 的时候，如果 template-vue 这个 npm 模块没有全局安装，它会提示你安装，之后再使用模板根目录里的配置文件 <code>sao.js</code> 将同目录里的 <code>template/</code> 中的文件生成到 <code>process.cwd()</code> 即当前目录。如果不存在配置文件，那么只会当成一个普通的目录，简单地复制粘贴到当前目录。</p>
 <p>📄 <strong>template-vue/sao.js:</strong></p>
