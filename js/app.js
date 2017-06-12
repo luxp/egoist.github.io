@@ -4,6 +4,9 @@ var $$ = document.querySelectorAll.bind(document)
 document.addEventListener('DOMContentLoaded', ready)
 
 function ready() {
+  if (location.hostname === 'fast.egoistian.com') {
+    $('.coding-support').classList.add('visible')
+  }
   // disqus
   if (window.isPost) {
     disqus()

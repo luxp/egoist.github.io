@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Revue 指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.3.2" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.3.2"><link rel="stylesheet" href="/css/zoom.css?v=4.3.2"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Revue 指南"><meta name="description" content="如何在 Vue 中使用 Redux 管理 State"><meta name="twitter:description" content="如何在 Vue 中使用 Redux 管理 State"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Revue 指南</h2><h2 class="post-subtitle">如何在 Vue 中使用 Redux 管理 State</h2><script></script><div class="post-content markdown-body"><h2 id="span-缘起小明-span"><span>缘起小明</span></h2>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Revue 指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.3.3" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.3.3"><link rel="stylesheet" href="/css/zoom.css?v=4.3.3"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Revue 指南"><meta name="description" content="如何在 Vue 中使用 Redux 管理 State"><meta name="twitter:description" content="如何在 Vue 中使用 Redux 管理 State"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Revue 指南</h2><h2 class="post-subtitle">如何在 Vue 中使用 Redux 管理 State</h2><script></script><div class="post-content markdown-body"><h2 id="span-缘起小明-span"><span>缘起小明</span></h2>
 <p>前几天小明找到我，说他想用 Vue 做一个小博客，自己写点东西，可是一来就遇到问题了，他发现组件之间的状态传递十分麻烦。父子组件还好点，在 Vue 里面可以用 <code>props</code> 执行函数或者 <code>this.$broadcast</code> <code>this.$dispatch</code> 来传递状态，可是两个完全没有联系的组件要共享状态十分困难啊。</p>
 <p>他是这样说的，他在做编辑器的时候侧边栏和编辑框都想知道用户<strong>是否已经保存</strong>这个状态， 而这两个组件完全没办法通过上述的几个方法共享 state。</p>
 <p>于是小明告诉我他绞尽脑汁想到的几个方法:</p>
@@ -19,40 +19,40 @@
 <p>Redux 在 React 中的应用是通过 <a href="https://github.com/rackt/react-redux" target="_blank" rel="external">React-Redux</a> 来绑定的，显得十分复杂。在 Vue 中绑定 Redux 却是十分的简单：</p>
 <pre><code class="language-javascript">// 首先创建你的 reducers/actions/store
 // 然后引入 revue 和你的 store
-import Revue from 'revue'
-import store from './store'
+import Revue from &quot;revue&quot;;
+import store from &quot;./store&quot;;
 // 将 Revue 作为一个插件在 Vue 中初始化
 // 同时绑定这个 store
-Vue.use(Revue, { store })
+Vue.use(Revue, { store });
 </code></pre>
 <p>这样就大功告成了，之后在每一个 Vue 实例被创建之后每个实例都会有 <code>this.$revue</code> 属性和 <code>this.$subscribe</code> 方法。现在就介绍这些该如何被使用:</p>
 <pre><code class="language-javascript">new Vue({
-	data () {
-		// this.$revue 实际上指向你创建的 redux store 对象
-		// 所以 store 有的方法都可以通过 this.$revue 调用
-		// 每一个 state 都需要一个初始状态
-		// 然后像下面这样调用初始状态
-		return {
-			counter: this.$store.state.counter // 假设默认你设置的是 0
-		}
-	},
-	methods: {
-		handleClick () {
-			// 点击之后执行 increment 让 counter 自增
-			this.$store.dispatch({type: 'INCERMENT'})
-			// 现在 store 里的 state 改变了!
-			// this.$revue.getState().counter 的值现在为 1
-		}
-	},
-	ready () {
-		// 你改变了 store 里的 state 可是它不会反映到你的实例中!
-		// 你需要手动订阅这个 state 更新
-		this.$subscribe('counter')
-		// 我的 store 里没有 counter 这个状态，我给它起的名字是 count 怎么办?
-		// 很简单
-		this.$subscribe('count as counter')
-	}
-})
+  data() {
+    // this.$revue 实际上指向你创建的 redux store 对象
+    // 所以 store 有的方法都可以通过 this.$revue 调用
+    // 每一个 state 都需要一个初始状态
+    // 然后像下面这样调用初始状态
+    return {
+      counter: this.$store.state.counter // 假设默认你设置的是 0
+    };
+  },
+  methods: {
+    handleClick() {
+      // 点击之后执行 increment 让 counter 自增
+      this.$store.dispatch({ type: &quot;INCERMENT&quot; });
+      // 现在 store 里的 state 改变了!
+      // this.$revue.getState().counter 的值现在为 1
+    }
+  },
+  ready() {
+    // 你改变了 store 里的 state 可是它不会反映到你的实例中!
+    // 你需要手动订阅这个 state 更新
+    this.$subscribe(&quot;counter&quot;);
+    // 我的 store 里没有 counter 这个状态，我给它起的名字是 count 怎么办?
+    // 很简单
+    this.$subscribe(&quot;count as counter&quot;);
+  }
+});
 </code></pre>
 <blockquote>
 <p>郑重提醒，本文开头提到的小明不是明哥，如有雷同，明哥不要打我。</p>
@@ -71,6 +71,6 @@ Vue.use(Revue, { store })
 var disqus_config = function () {
   this.page.url = 'https://egoistian.com/2015/12/18/revue-guide/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '2015/12/18/revue-guide/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/revue-guide.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hide-on-mobile">CC BY-NC-ND 4.0</a><span class="hide-on-mobile">&nbsp;</span><span>&copy;&nbsp;</span><a href="https://github.com/egoist">E.Z.</a><span class="hide-on-mobile">&nbsp;</span><a href="https://github.com/egoist/blog" class="hide-on-mobile">Read the source code.</a></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/revue-guide.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><span class="hide-on-mobile"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">CC BY-NC-ND 4.0</a></span><span>&copy;</span><span><a href="https://github.com/egoist">E.Z.</a></span><span class="hide-on-mobile coding-support">Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages.</a></span><span class="hide-on-mobile"><a href="https://github.com/egoist/blog">Read the source code.</a></span></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 ga('create', 'UA-54857209-6', 'auto');
-ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.3.2"></script><script src="/js/zoom.js?v=4.3.2"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.3.2"></script></body></html>
+ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.3.3"></script><script src="/js/zoom.js?v=4.3.3"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.3.3"></script></body></html>

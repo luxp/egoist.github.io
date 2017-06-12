@@ -1,28 +1,32 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>一个简单的 localStorage 扩展实现</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.3.2" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.3.2"><link rel="stylesheet" href="/css/zoom.css?v=4.3.2"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="一个简单的 localStorage 扩展实现"><meta name="description" content="之前做了一个类似 localStorage 的 orm 之类的东西，可以让你简单地像操作数据库一样地操作 localStorage。因为打算做个记事本之类的应用需要在本地储存笔记并方便的进行查询所以建"><meta name="twitter:description" content="之前做了一个类似 localStorage 的 orm 之类的东西，可以让你简单地像操作数据库一样地操作 localStorage。因为打算做个记事本之类的应用需要在本地储存笔记并方便的进行查询所以建"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">一个简单的 localStorage 扩展实现</h2><script></script><div class="post-content markdown-body"><p>之前做了一个类似 <code>localStorage</code> 的 <code>orm</code> 之类的东西，可以让你简单地像操作数据库一样地操作 <code>localStorage</code>。因为打算做个记事本之类的应用需要在本地储存笔记并方便的进行查询所以建立了这个库。</p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>一个简单的 localStorage 扩展实现</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.3.3" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.3.3"><link rel="stylesheet" href="/css/zoom.css?v=4.3.3"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="一个简单的 localStorage 扩展实现"><meta name="description" content="之前做了一个类似 localStorage 的 orm 之类的东西，可以让你简单地像操作数据库一样地操作 localStorage。因为打算做个记事本之类的应用需要在本地储存笔记并方便的进行查询所以建"><meta name="twitter:description" content="之前做了一个类似 localStorage 的 orm 之类的东西，可以让你简单地像操作数据库一样地操作 localStorage。因为打算做个记事本之类的应用需要在本地储存笔记并方便的进行查询所以建"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">一个简单的 localStorage 扩展实现</h2><script></script><div class="post-content markdown-body"><p>之前做了一个类似 <code>localStorage</code> 的 <code>orm</code> 之类的东西，可以让你简单地像操作数据库一样地操作 <code>localStorage</code>。因为打算做个记事本之类的应用需要在本地储存笔记并方便的进行查询所以建立了这个库。</p>
 <p>你可以简单地预览一下：</p>
-<pre><code class="language-javascript">// localdb 会自动为新插入的 collcetion 生成 `_id`、`index` 和 `createdAt` 
+<pre><code class="language-javascript">// localdb 会自动为新插入的 collcetion 生成 `_id`、`index` 和 `createdAt`
 // 以及 `updatedAt`
 // `_id` 是类似 MongoDB 的 objectId
-var User = new localdb('User', 'Array', true)
+var User = new localdb(&quot;User&quot;, &quot;Array&quot;, true);
 
-var users = [{
-  username: 'kevin',
-  age: 16
-}, {
-  username: 'joe',
-  age: 19
-}, {
-  username: 'zchan',
-  age: 12
-}]
+var users = [
+  {
+    username: &quot;kevin&quot;,
+    age: 16
+  },
+  {
+    username: &quot;joe&quot;,
+    age: 19
+  },
+  {
+    username: &quot;zchan&quot;,
+    age: 12
+  }
+];
 
 var opts = {
   sort: 1,
-  sortBy: 'age'
-}
-var users_fetched = User.override(users, true).find(null, opts)
+  sortBy: &quot;age&quot;
+};
+var users_fetched = User.override(users, true).find(null, opts);
 
-console.log(JSON.stringify(users_fetched, null, 2))
+console.log(JSON.stringify(users_fetched, null, 2));
 </code></pre>
 <p>这样就能按照 <code>age</code> 递增输出这样的结果:</p>
 <pre><code class="language-json">[
@@ -54,12 +58,12 @@ console.log(JSON.stringify(users_fetched, null, 2))
 </code></pre>
 <p>如果你想查询 <code>username</code> 为 <code>zchan</code> 的用户:</p>
 <pre><code class="language-javascript">var query = {
-  username: 'zchan'
-}
+  username: &quot;zchan&quot;
+};
 
-var zchan = User.findOne(query)
+var zchan = User.findOne(query);
 
-console.log(JSON.stringify(zchan, null, 2))
+console.log(JSON.stringify(zchan, null, 2));
 </code></pre>
 <p>这样就查询并返回了一个对象:</p>
 <pre><code class="language-json">{
@@ -74,19 +78,19 @@ console.log(JSON.stringify(zchan, null, 2))
 <p><code>.find</code> 和 <code>.findOne</code> 类似不过不限制数量且可以进行排序、分页查询等操作。</p>
 <p>甚至支持了 MongoDB 的 <code>populate</code> 特性，不过暂时只能查询一层嵌套:</p>
 <pre><code class="language-javascript">// populate another class, eg: your Post have a Author field
-const Post = new localdb('Post', 'Array')
-const User = new localdb('User', 'Array')
+const Post = new localdb(&quot;Post&quot;, &quot;Array&quot;);
+const User = new localdb(&quot;User&quot;, &quot;Array&quot;);
 
 // you should have the Author's objectId to create an instance of that class
-const author = User.extend('some_object_id')
+const author = User.extend(&quot;some_object_id&quot;);
 
 Post.add({
-  title: 'mt post title',
+  title: &quot;mt post title&quot;,
   author: author
-})
+});
 
 // then you can populate that field before .find or .findOne
-Post.populate('author').findOne()
+Post.populate(&quot;author&quot;).findOne();
 </code></pre>
 <hr>
 <p>更详细的使用可以参考这个用 Vue 和 LocalDB <a href="http://output.jsbin.com/titeve" target="_blank" rel="external">TodoMVC</a> 演示和 <a href="https://egoist.github.io/localdb/" target="_blank" rel="external">API</a>。</p>
@@ -94,6 +98,6 @@ Post.populate('author').findOne()
 var disqus_config = function () {
   this.page.url = 'https://egoistian.com/2015/09/30/a-light-weight-localstorage-orm/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '2015/09/30/a-light-weight-localstorage-orm/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/a-light-weight-localstorage-orm.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hide-on-mobile">CC BY-NC-ND 4.0</a><span class="hide-on-mobile">&nbsp;</span><span>&copy;&nbsp;</span><a href="https://github.com/egoist">E.Z.</a><span class="hide-on-mobile">&nbsp;</span><a href="https://github.com/egoist/blog" class="hide-on-mobile">Read the source code.</a></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/a-light-weight-localstorage-orm.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><span class="hide-on-mobile"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">CC BY-NC-ND 4.0</a></span><span>&copy;</span><span><a href="https://github.com/egoist">E.Z.</a></span><span class="hide-on-mobile coding-support">Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages.</a></span><span class="hide-on-mobile"><a href="https://github.com/egoist/blog">Read the source code.</a></span></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 ga('create', 'UA-54857209-6', 'auto');
-ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.3.2"></script><script src="/js/zoom.js?v=4.3.2"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.3.2"></script></body></html>
+ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.3.3"></script><script src="/js/zoom.js?v=4.3.3"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.3.3"></script></body></html>

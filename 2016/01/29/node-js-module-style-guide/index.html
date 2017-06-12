@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Node.js 模块风格指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.3.2" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.3.2"><link rel="stylesheet" href="/css/zoom.css?v=4.3.2"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Node.js 模块风格指南"><meta name="description" content="编写高质量、可复用的 Node.js 模块"><meta name="twitter:description" content="编写高质量、可复用的 Node.js 模块"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Node.js 模块风格指南</h2><h2 class="post-subtitle">编写高质量、可复用的 Node.js 模块</h2><script></script><div class="post-content markdown-body"><p>JavaScript 代码一向的特点就是难以维护，保持一个良好的代码、组织风格有助于提升效率、重构代码、添加新功能、单元测试等等。</p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Node.js 模块风格指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.3.3" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.3.3"><link rel="stylesheet" href="/css/zoom.css?v=4.3.3"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Node.js 模块风格指南"><meta name="description" content="编写高质量、可复用的 Node.js 模块"><meta name="twitter:description" content="编写高质量、可复用的 Node.js 模块"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Node.js 模块风格指南</h2><h2 class="post-subtitle">编写高质量、可复用的 Node.js 模块</h2><script></script><div class="post-content markdown-body"><p>JavaScript 代码一向的特点就是难以维护，保持一个良好的代码、组织风格有助于提升效率、重构代码、添加新功能、单元测试等等。</p>
 <p>我总结了一下写了 200 个 NPM package 之后的一些个人经验和习惯。</p>
 <h2 id="span-初始化一个项目-span"><span>初始化一个项目</span></h2>
 <p>不再使用 <code>npm init</code>。因为除了 <code>package.json</code> 还有一些额外的配置文件，比如 <code>circle.yml</code>、<code>.editorconfig</code>、<code>LICENSE</code> 、<code>README.md</code> 等等。</p>
@@ -10,7 +10,7 @@
 <pre><code class="language-js">/**	
  * Module dependencies
  */
-const path = require('path')
+const path = require(&quot;path&quot;);
 
 /**
  * Reverse array but not change itself
@@ -19,7 +19,7 @@ const path = require('path')
  * @return {Array}
  */
 function rev(names) {
-	return names.concat().reverse()
+  return names.concat().reverse();
 }
 </code></pre>
 <h2 id="span-编写可复用模块-span"><span>编写可复用模块</span></h2>
@@ -30,42 +30,39 @@ function rev(names) {
 <p>对于异步代码，尽量不要使用 callback 而是改成 Promise，并且把 HTTP 请求封装进单独的模块，这样更方便配合 <a href="https://github.com/tj/co" target="_blank" rel="external">co</a> 来使用。</p>
 <pre><code class="language-js">// fetchData.js
 // 老式回调风格
-const request = require('superagent')
+const request = require(&quot;superagent&quot;);
 
-module.exports = function (callback) {
-	request
-		.get('xxx.json')
-		.end((err, res) =&gt; {
-			callback(res)
-		})
-}
+module.exports = function(callback) {
+  request.get(&quot;xxx.json&quot;).end((err, res) =&gt; {
+    callback(res);
+  });
+};
 // app.js
 // 调用它
-const fetchData = require('./fetchData')
+const fetchData = require(&quot;./fetchData&quot;);
 
-module.exports = function () {
-	fetchData(data =&gt; {
-		console.log(data)
-	})
-}
+module.exports = function() {
+  fetchData(data =&gt; {
+    console.log(data);
+  });
+};
 
 // fetchData.js
 // 无阻塞同步代码风格
-const fetch = require('node-fetch')
+const fetch = require(&quot;node-fetch&quot;);
 
-module.exports = co.wrap(function* () {
-	const data = yield fetch('xxx.json')
-		.then(data =&gt; data.json())
-	return data
-})
+module.exports = co.wrap(function*() {
+  const data = yield fetch(&quot;xxx.json&quot;).then(data =&gt; data.json());
+  return data;
+});
 // app.js
 // 调用它
-const fetchData = require('./fetchData')
+const fetchData = require(&quot;./fetchData&quot;);
 
-module.exports = co.wrap(function* () {
-	const data = yield fetchData()
-	console.log(data)
-})
+module.exports = co.wrap(function*() {
+  const data = yield fetchData();
+  console.log(data);
+});
 </code></pre>
 <p><strong>还使用 co? 不是有 async/await 吗?</strong></p>
 <p>在 async/await 没被 v8 引擎实现之前用 co 都还是第一选择，除非某些情况你使用了 babel 那你可以考虑使用 async/await。不过即使现在用 co 在将来 async/await api 被实现的时候也能轻松地迁移过去。</p>
@@ -104,6 +101,6 @@ git commit -m &quot;🔥&quot;
 var disqus_config = function () {
   this.page.url = 'https://egoistian.com/2016/01/29/node-js-module-style-guide/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '2016/01/29/node-js-module-style-guide/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/node-js-module-style-guide.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hide-on-mobile">CC BY-NC-ND 4.0</a><span class="hide-on-mobile">&nbsp;</span><span>&copy;&nbsp;</span><a href="https://github.com/egoist">E.Z.</a><span class="hide-on-mobile">&nbsp;</span><a href="https://github.com/egoist/blog" class="hide-on-mobile">Read the source code.</a></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/node-js-module-style-guide.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><span class="hide-on-mobile"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">CC BY-NC-ND 4.0</a></span><span>&copy;</span><span><a href="https://github.com/egoist">E.Z.</a></span><span class="hide-on-mobile coding-support">Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages.</a></span><span class="hide-on-mobile"><a href="https://github.com/egoist/blog">Read the source code.</a></span></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 ga('create', 'UA-54857209-6', 'auto');
-ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.3.2"></script><script src="/js/zoom.js?v=4.3.2"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.3.2"></script></body></html>
+ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.3.3"></script><script src="/js/zoom.js?v=4.3.3"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.3.3"></script></body></html>

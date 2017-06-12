@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>新世纪福音脚手架</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.3.2" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.3.2"><link rel="stylesheet" href="/css/zoom.css?v=4.3.2"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="新世纪福音脚手架"><meta name="description" content="she said, &quot;it's futuristic.&quot;"><meta name="twitter:description" content="she said, &quot;it's futuristic.&quot;"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">新世纪福音脚手架</h2><h2 class="post-subtitle">she said, &quot;it's futuristic.&quot;</h2><script></script><div class="post-content markdown-body"><p>好的作品不在于其形式，重要的是内容，我的很多音乐作品都是没有名字的，然而没有名字的东西无法商业流通，所以你才会看到我那些没有特殊意义、单纯靠滚键盘得到的名字。 —— <a href="http://music.163.com/#/artist?id=15290" target="_blank" rel="external">泽野弘之</a>曾经这样说过(其实并没有)。</p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>新世纪福音脚手架</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.3.3" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.3.3"><link rel="stylesheet" href="/css/zoom.css?v=4.3.3"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="新世纪福音脚手架"><meta name="description" content="she said, &quot;it's futuristic.&quot;"><meta name="twitter:description" content="she said, &quot;it's futuristic.&quot;"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">新世纪福音脚手架</h2><h2 class="post-subtitle">she said, &quot;it's futuristic.&quot;</h2><script></script><div class="post-content markdown-body"><p>好的作品不在于其形式，重要的是内容，我的很多音乐作品都是没有名字的，然而没有名字的东西无法商业流通，所以你才会看到我那些没有特殊意义、单纯靠滚键盘得到的名字。 —— <a href="http://music.163.com/#/artist?id=15290" target="_blank" rel="external">泽野弘之</a>曾经这样说过(其实并没有)。</p>
 <p>这篇文章也是这个道理，想介绍一下我在半年前开始做的脚手架工具。给文章起标题也是一件很困难的事，最开始想到的是「史上最优雅的脚手架工具」、「来自未来的脚手架」，不过这些未免显得太标题党了，华而不实我自己都很尴尬。最近我刚好做了个<a href="https://github.com/egoist/evangelion-card" target="_blank" rel="external">新世纪福音战士标题卡生成器</a>，于是就随机将几个关键词组合在一起 —— <strong>新世纪福音脚手架</strong>，意外地显得还不错。</p>
 <p><img src="https://ooo.0o0.ooo/2017/05/21/5921898822cae.png" alt="sao"></p>
 <p><strong>为了不让你对标题不明所以，简单地说明了它的来历，以下才是正文。</strong></p>
@@ -12,8 +12,8 @@
   // 从用户获取一些信息
   prompts: {
     pwa: {
-      type: 'confirm',
-      message: 'Add Progressive Web App support',
+      type: &quot;confirm&quot;,
+      message: &quot;Add Progressive Web App support&quot;,
       default: true
     }
   },
@@ -22,13 +22,13 @@
   // 为了避免这种情况需要起个另外的名字
   // 然后在生成的时候改名为 .gitignore
   move: {
-    gitignore: '.gitignore'
+    gitignore: &quot;.gitignore&quot;
   },
   // 只在用户确认了 pwa 选项的时候生成 pwa.js
   filters: {
-    'pwa.js': 'pwa'
+    &quot;pwa.js&quot;: &quot;pwa&quot;
   }
-}
+};
 </code></pre>
 <p>上面的这个配置文件满足了大部分脚手架的需求，即从用户获取信息 --&gt; 根据此信息生成需要的文件。而且几乎与代码无关，这个配置文件完全是由<strong>数据</strong>组成的，只不过刚好是以 JS 对象的格式。</p>
 <p><img src="https://ooo.0o0.ooo/2017/05/21/59218de93485b.png" alt="preview"></p>
@@ -42,33 +42,32 @@
 <h2 id="测试脚手架">测试脚手架</h2>
 <p>当脚手架变得复杂，你需要系统地测试以便让其在各种情况下都能生成正确的文件。对于一个脚手架，能从用户影响到它的变量只有 <code>prompts</code> 这个参数，也就是从用户获取的信息。而 SAO 的测试也主要是围绕这个来的，你可以模拟用户输入来检测生成结果。</p>
 <p>📄 <strong>template-vue/test.js:</strong></p>
-<pre><code class="language-js">import test from 'ava'
-import sao from 'sao'
+<pre><code class="language-js">import test from &quot;ava&quot;;
+import sao from &quot;sao&quot;;
 
-test('generate pwa entry', async t =&gt; {
-  const template = process.cwd() // 模板根目录
-  const res = await sao.mockPrompt(template, {
-    // 模拟的 prompts 数据
-    // 默认使用 `prompts` 中的默认值
-    // 在上面的 `sao.js` 中 `pwa` 默认为 `true`
-  })
-  t.true(res.fileList.includes('pwa.js'))
-})
+test(&quot;generate pwa entry&quot;, async t =&gt; {
+  const template = process.cwd(); // 模板根目录
+  const res = await sao.mockPrompt(
+    template,
+    {
+      // 模拟的 prompts 数据
+      // 默认使用 `prompts` 中的默认值
+      // 在上面的 `sao.js` 中 `pwa` 默认为 `true`
+    }
+  );
+  t.true(res.fileList.includes(&quot;pwa.js&quot;));
+});
 
-test('ignore pwa entry', async t =&gt; {
-  const template = process.cwd() // 模板根目录
+test(&quot;ignore pwa entry&quot;, async t =&gt; {
+  const template = process.cwd(); // 模板根目录
   const res = await sao.mockPrompt(template, {
     pwa: false
-  })
-  t.false(res.fileList.includes('pwa.js'))
-})
+  });
+  t.false(res.fileList.includes(&quot;pwa.js&quot;));
+});
 </code></pre>
 <p>这里的 <code>res.fileList</code> 是生成的文件列表，形如:</p>
-<pre><code class="language-js">[
-  '.gitignore',
-  'pwa.js',
-  'src/index.js'
-]
+<pre><code class="language-js">[&quot;.gitignore&quot;, &quot;pwa.js&quot;, &quot;src/index.js&quot;];
 </code></pre>
 <p>以及 <code>res.files</code>，包含了生成文件的信息:</p>
 <pre><code class="language-js">{
@@ -92,6 +91,6 @@ test('ignore pwa entry', async t =&gt; {
 var disqus_config = function () {
   this.page.url = 'https://egoistian.com/2017/05/21/neon-genesis-scaffolding-tool/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '2017/05/21/neon-genesis-scaffolding-tool/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/neon-genesis-scaffolding-tool.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" class="hide-on-mobile">CC BY-NC-ND 4.0</a><span class="hide-on-mobile">&nbsp;</span><span>&copy;&nbsp;</span><a href="https://github.com/egoist">E.Z.</a><span class="hide-on-mobile">&nbsp;</span><a href="https://github.com/egoist/blog" class="hide-on-mobile">Read the source code.</a></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/neon-genesis-scaffolding-tool.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><span class="hide-on-mobile"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">CC BY-NC-ND 4.0</a></span><span>&copy;</span><span><a href="https://github.com/egoist">E.Z.</a></span><span class="hide-on-mobile coding-support">Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages.</a></span><span class="hide-on-mobile"><a href="https://github.com/egoist/blog">Read the source code.</a></span></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 ga('create', 'UA-54857209-6', 'auto');
-ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.3.2"></script><script src="/js/zoom.js?v=4.3.2"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.3.2"></script></body></html>
+ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.3.3"></script><script src="/js/zoom.js?v=4.3.3"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.3.3"></script></body></html>
