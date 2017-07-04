@@ -6,13 +6,13 @@
 <p>也许我的表达并不直观，简而言之，tooling 让你开发的便利程度趋近直接用一个 html 搞定。</p>
 <p>tooling 内置了 Vue 和 React 的依赖，这意味着你要开发这两种框架的网页几乎是 <code>no setup</code>，新建一个项目，不用 <code>npm init</code>，不用安装任何依赖，直接：</p>
 <p><strong>index.js</strong></p>
-<pre><code class="language-javascript">import Vue from &quot;vue&quot;;
-import app from &quot;./app&quot;;
+<pre><code class="language-javascript">import Vue from 'vue'
+import app from './app'
 
 new Vue({
-  el: &quot;body&quot;,
-  components: { app }
-});
+  el: 'body',
+  components: {app}
+})
 </code></pre>
 <p><strong>app.vue</strong></p>
 <pre><code class="language-vue">&lt;style&gt;

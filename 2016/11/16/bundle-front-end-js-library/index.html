@@ -14,19 +14,19 @@
 <p>打包的一个目的就是使用 Babel 之类的转换器编译 ES next 到 ES5，bili 默认使用 <a href="https://buble.surge.sh/guide" target="_blank" rel="external">buble</a> 来转换 JavaScript 代码，相比 Babel 它更轻量。</p>
 <p>你当然也可以在 bili 中使用 babel 来编译代码，这需要用到 bili 的配置文件 <code>bili.config.js</code>:</p>
 <pre><code class="language-js">module.exports = {
-  jsCompiler: require(&quot;rollup-plugin-babel&quot;)({
-    presets: [&quot;preset&quot;]
+  jsCompiler: require('rollup-plugin-babel')({
+    presets: ['preset']
   })
-};
+}
 </code></pre>
 <p>bili 是基于 <a href="https://github.com/rollup/rollup" target="_blank" rel="external">Rollup</a> 的，所以相关 Rollup 插件都可以用来编译 JS 代码。</p>
 <h2 id="span-buble-span"><span>Buble</span></h2>
 <p>正如之前说了，默认我们使用 <code>buble</code>，你可以在配置文件中更改 buble 的配置参数:</p>
 <pre><code class="language-js">module.exports = {
   buble: {
-    objectAssign: &quot;objectAssign&quot;
+    objectAssign: 'objectAssign'
   }
-};
+}
 </code></pre>
 <p>值得一提的是，buble 不支持 <code>async/await</code> 并且不能将 <code>generator</code> 转换成 ES5 代码，所以我们保留了 generator 代码并且用 <a href="https://github.com/leebyron/async-to-gen" target="_blank" rel="external">async-to-gen</a> 将 <code>async/await</code> 转换到 <code>generator</code>，如果用到了这两个请考虑浏览器兼容性，或者换成 babel 来编译。</p>
 <h2 id="span-watch-mode-span"><span>Watch mode</span></h2>

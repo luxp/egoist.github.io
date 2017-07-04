@@ -19,40 +19,40 @@
 <p>Redux 在 React 中的应用是通过 <a href="https://github.com/rackt/react-redux" target="_blank" rel="external">React-Redux</a> 来绑定的，显得十分复杂。在 Vue 中绑定 Redux 却是十分的简单：</p>
 <pre><code class="language-javascript">// 首先创建你的 reducers/actions/store
 // 然后引入 revue 和你的 store
-import Revue from &quot;revue&quot;;
-import store from &quot;./store&quot;;
+import Revue from 'revue'
+import store from './store'
 // 将 Revue 作为一个插件在 Vue 中初始化
 // 同时绑定这个 store
-Vue.use(Revue, { store });
+Vue.use(Revue, { store })
 </code></pre>
 <p>这样就大功告成了，之后在每一个 Vue 实例被创建之后每个实例都会有 <code>this.$revue</code> 属性和 <code>this.$subscribe</code> 方法。现在就介绍这些该如何被使用:</p>
 <pre><code class="language-javascript">new Vue({
-  data() {
-    // this.$revue 实际上指向你创建的 redux store 对象
-    // 所以 store 有的方法都可以通过 this.$revue 调用
-    // 每一个 state 都需要一个初始状态
-    // 然后像下面这样调用初始状态
-    return {
-      counter: this.$store.state.counter // 假设默认你设置的是 0
-    };
-  },
-  methods: {
-    handleClick() {
-      // 点击之后执行 increment 让 counter 自增
-      this.$store.dispatch({ type: &quot;INCERMENT&quot; });
-      // 现在 store 里的 state 改变了!
-      // this.$revue.getState().counter 的值现在为 1
-    }
-  },
-  ready() {
-    // 你改变了 store 里的 state 可是它不会反映到你的实例中!
-    // 你需要手动订阅这个 state 更新
-    this.$subscribe(&quot;counter&quot;);
-    // 我的 store 里没有 counter 这个状态，我给它起的名字是 count 怎么办?
-    // 很简单
-    this.$subscribe(&quot;count as counter&quot;);
-  }
-});
+	data () {
+		// this.$revue 实际上指向你创建的 redux store 对象
+		// 所以 store 有的方法都可以通过 this.$revue 调用
+		// 每一个 state 都需要一个初始状态
+		// 然后像下面这样调用初始状态
+		return {
+			counter: this.$store.state.counter // 假设默认你设置的是 0
+		}
+	},
+	methods: {
+		handleClick () {
+			// 点击之后执行 increment 让 counter 自增
+			this.$store.dispatch({type: 'INCERMENT'})
+			// 现在 store 里的 state 改变了!
+			// this.$revue.getState().counter 的值现在为 1
+		}
+	},
+	ready () {
+		// 你改变了 store 里的 state 可是它不会反映到你的实例中!
+		// 你需要手动订阅这个 state 更新
+		this.$subscribe('counter')
+		// 我的 store 里没有 counter 这个状态，我给它起的名字是 count 怎么办?
+		// 很简单
+		this.$subscribe('count as counter')
+	}
+})
 </code></pre>
 <blockquote>
 <p>郑重提醒，本文开头提到的小明不是明哥，如有雷同，明哥不要打我。</p>

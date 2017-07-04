@@ -4,80 +4,58 @@
 <p>对于下面这段代码，你可以通过编译结果看出它们设计上的不同:</p>
 <pre><code class="language-js">class Foo {
   constructor() {
-    this.pos = 0;
+    this.pos = 0
   }
 
   say(word) {
-    return `hello ${world}`;
+    return `hello ${world}`
   }
 
   walk() {
-    this.pos++;
+    this.pos++
   }
 }
 </code></pre>
 <p>Babel 的结果:</p>
 <pre><code class="language-js">&quot;use strict&quot;;
 
-var _createClass = (function() {
-  function defineProperties(target, props) {
-    for (var i = 0; i &lt; props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if (&quot;value&quot; in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-  return function(Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-})();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (&quot;value&quot; in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError(&quot;Cannot call a class as a function&quot;);
-  }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(&quot;Cannot call a class as a function&quot;); } }
 
-var Foo = (function() {
+var Foo = function () {
   function Foo() {
     _classCallCheck(this, Foo);
 
     this.pos = 0;
   }
 
-  _createClass(Foo, [
-    {
-      key: &quot;say&quot;,
-      value: function say(word) {
-        return &quot;hello &quot; + world;
-      }
-    },
-    {
-      key: &quot;walk&quot;,
-      value: function walk() {
-        this.pos++;
-      }
+  _createClass(Foo, [{
+    key: &quot;say&quot;,
+    value: function say(word) {
+      return &quot;hello &quot; + world;
     }
-  ]);
+  }, {
+    key: &quot;walk&quot;,
+    value: function walk() {
+      this.pos++;
+    }
+  }]);
 
   return Foo;
-})();
+}();
 </code></pre>
 <p>Buble 的结果:</p>
 <pre><code class="language-js">var Foo = function Foo() {
-  this.pos = 0;
+  this.pos = 0
 };
 
-Foo.prototype.say = function say(word) {
-  return &quot;hello &quot; + world;
+Foo.prototype.say = function say (word) {
+  return (&quot;hello &quot; + world)
 };
 
-Foo.prototype.walk = function walk() {
-  this.pos++;
+Foo.prototype.walk = function walk () {
+  this.pos++
 };
 </code></pre>
 <p>总的来说 Buble 的结果可读性更强、更简洁，而且设计初衷就是为了不引入 <code>_createClass</code> 之类的 runtime。</p>
@@ -90,8 +68,11 @@ Foo.prototype.walk = function walk() {
 <p>我一般会将 Rollup、Buble 以及 async-to-gen 配合使用:</p>
 <pre><code class="language-js">// rollup.config.js
 export default {
-  plugins: [require(&quot;rollup-plugin-async&quot;)(), require(&quot;rollup-plugin-buble&quot;)()]
-};
+  plugins: [
+    require('rollup-plugin-async')(),
+    require('rollup-plugin-buble')()
+  ]
+}
 </code></pre>
 <p>其实由于在开发 web app 的时候基本还是用 webpack 为主而且又是对 ES features 的需求不止于 ES2015，这个时候我一般还是选择用 Babel 编译。</p>
 <p>而对于可复用的 library，不太需要 async/await 或者只是针对 Node.js 环境的时候，使用 Buble 还是很理想的。</p>
