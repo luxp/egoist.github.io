@@ -4,7 +4,7 @@ var $$ = document.querySelectorAll.bind(document)
 document.addEventListener('DOMContentLoaded', ready)
 
 function ready() {
-  if (location.hostname === 'fast.egoistian.com') {
+  if (location.hostname === 'blog.egoist.moe') {
     $('.coding-support').classList.add('visible')
   }
   // disqus
