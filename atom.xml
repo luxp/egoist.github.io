@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://egoist.moe/"/>
-  <updated>2017-05-21T16:11:52.000Z</updated>
+  <updated>2017-07-08T08:37:50.000Z</updated>
   <id>https://egoist.moe/</id>
   
   <author>
@@ -14,6 +14,115 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Bili: 打包 JS 库的瑞士军刀</title>
+    <link href="https://egoist.moe/2017/07/08/bili/"/>
+    <id>https://egoist.moe/2017/07/08/bili/</id>
+    <published>2017-07-08T07:13:17.000Z</published>
+    <updated>2017-07-08T08:37:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="预习">预习</h2>
+<h3 id="rollup">Rollup</h3>
+<p><a href="https://github.com/rollup/rollup" target="_blank" rel="external">Rollup</a> 类似 <a href="https://webpack.js.org" target="_blank" rel="external">Webpack</a>/Browserify 之类的打包工具，但是打包出来的文件更小，即便是和 Webpack 3 相比。除此之外 Rollup 主要用于打包 library 并且拥有非常简单的 API 接口。</p>
+<h3 id="瑞士军刀">瑞士军刀</h3>
+<p>多种用途，携带方便且操作简单，意外地看起来很酷。</p>
+<h2 id="授业">授业</h2>
+<blockquote>
+<p>学生 A：道理我都懂，可是 EGOIST sensei! 为什么给 Rollup 套个皮就拿出来卖了？这根本不是编程！</p>
+</blockquote>
+<p>的确这不是什么有难度、有深度的东西，只是用来解决一个简单的问题：简化打包流程，提高人类自身价值感和归属感。</p>
+<blockquote>
+<p>学生 B：哦？是怎么做到的呢，想知道呢！sensei sensei 快告诉我！</p>
+</blockquote>
+<p>既然这个同学可爱地向我提问了那我就简明易懂地告诉大家吧！你可以在 <a href="https://github.com/rollup/rollup/wiki/JavaScript-API" target="_blank" rel="external">WIKI</a> 找到 Rollup 的 API 食用方法，简单地说它接受一个参数，而这个参数决定了如何寻找、操作你的源代码，比如:</p>
+<pre><code class="language-js">rollup.rollup({
+  // 从这个文件开始:
+  entry: 'src/index.js',
+  // 用写插件自定义如何转换代码吧
+  plugins: []
+})
+</code></pre>
+<p>然后它会返回一个 Promise 把 <code>bundle</code> 送到你手上，你可以决定如何生成文件:</p>
+<pre><code class="language-js">rollup.rollup(options)
+  .then(bundle =&gt; {
+    // 我想写到磁盘上！
+    bundle.write({
+      // 等等 Rollup 娘，写成 commonjs 格式的哦！
+      format: 'cjs',
+      // 给生成的文件一个名字吧！
+      dest: 'bundle.js'
+    })
+  })
+</code></pre>
+<blockquote>
+<p>学生 C 跳了起来: EGOIST sensei! 这看上去好简单啊，根本没你的 <a href="https://github.com/egoist/bili" target="_blank" rel="external">Bili</a> 的出场机会了啊 QAQ</p>
+</blockquote>
+<p>的确很简单，但是你可以看看 <a href="https://github.com/vuejs/vue/blob/dev/build/build.js" target="_blank" rel="external">Vue</a> 和 <a href="https://github.com/facebook/react/blob/master/scripts/rollup/build.js" target="_blank" rel="external">React</a> 的构建脚本，真是无比地冗长。</p>
+<p>越 low level 的 API 看起来就越简单，但在大项目中就会被有经验的开发者用更复杂的方式来使用，人们称这种情况为 <strong>M 属性</strong>，不过这已经在这节课的范畴之外了。</p>
+<p>简而言之，大多数项目都会有生成多个 bundle 的需求，比如不同格式的 bundle、抑或替换了不同变量的 bundle，你势必将多次使用 Rollup <strong>简单</strong>的 API 来解决这些需求。而将这一行为抽离出来，放进一个单独的工具中以便重复使用，便是 Bili 干的事:</p>
+<pre><code class="language-bash">bili --format cjs,umd,es --compress umd
+</code></pre>
+<p>为了能尽可能直接用命令行就可以使用 Bili 的全部功能，<code>format</code> 接受以逗号分割的一个或多个格式名，当然数组也可以不过命令行里不太方便。</p>
+<p>让我们来看看使用原汁原味的 Rollup 来写看起来是什么样子:</p>
+<pre><code class="language-js">import { rollup } from 'rollup'
+
+function build(format) {
+  const plugins = [
+    // ES2015 -&gt; ES5
+    require('rollup-plugin-buble')()
+  ]
+
+  let compress = false
+
+  if (format.endsWith('Compress')) {
+    format = format.replace(/Compress$/, '')
+    compress = true
+  }
+
+  if (format === 'umd') {
+    // 把第三方模块打包进来
+    plugins.push(
+      require('rollup-plugin-node-resolve')(),
+      require('rollup-plugin-commonjs')()
+    )
+  }
+
+  if (compress) {
+    // 压缩
+    plugins.push(require('rollup-plugin-uglifyjs')())
+  }
+
+  return rollup({
+    entry: 'src/index.js',
+    plugins
+  }, bundle =&gt; bundle.write({
+    dest: `dist/index.${format}.js`,
+    format
+  }))
+}
+
+Promise.all(['umd', 'cjs', 'es', 'umdCompress'].map(build))
+  .then(() =&gt; console.log('done'))
+  .catch(err =&gt; console.error(err))
+</code></pre>
+<p>就是以上这样的感觉，Bili 最近被中国超高校级的计算机协会授予了节能减排倡导先锋和键盘寿命拯救者的光荣称号，以及还有人类脑细胞的救星、键盘手杀手、让正太和萝莉也很容易地打包了这些市井称号。</p>
+<p><a href="https://github.com/search?l=JSON&amp;o=desc&amp;q=bili+scripts+build&amp;s=indexed&amp;type=Code&amp;utf8=%E2%9C%93" target="_blank" rel="external">Bili 被大量使用在我的前端库中</a>，有人会问那 CSS 以及图片、字体什么的怎么办，对于 CSS 我一般不会打包，直接原样交给用户。而字体、图片什么的一般也都是 CSS 里用的，自然同理。当然，我暂时还没有遇到需要字体和图片的情况。</p>
+<h2 id="放课后">放课后</h2>
+<p>放学后同学们都会到家跃跃欲试，打开电脑，发明了 <a href="https://github.com/egoist/bili" target="_blank" rel="external">Bili</a> <a href="https://github.com/egoist/bili/releases/tag/v0.17.0" target="_blank" rel="external">v0.17</a> 的数个 breaking changes，当然都是花一分钟就能搞定的变更。</p>
+<p>从此，大家过让了幸福的打包生活。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;预习&quot;&gt;预习&lt;/h2&gt;
+&lt;h3 id=&quot;rollup&quot;&gt;Rollup&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/rollup/rollup&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Rollup&lt;/a&gt; 类似 &lt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>新世纪福音脚手架</title>
@@ -1069,34 +1178,6 @@ $ psql -U username -l
     
     
       <category term="animes" scheme="https://egoist.moe/tags/animes/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>为什么我不会结婚</title>
-    <link href="https://egoist.moe/2016/04/02/why-i-wont-marry/"/>
-    <id>https://egoist.moe/2016/04/02/why-i-wont-marry/</id>
-    <published>2016-04-02T11:27:34.000Z</published>
-    <updated>2016-08-29T08:33:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li>有生理缺陷</li>
-<li>有心理缺陷</li>
-<li>没有值得喜欢的人</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;有生理缺陷&lt;/li&gt;
-&lt;li&gt;有心理缺陷&lt;/li&gt;
-&lt;li&gt;没有值得喜欢的人&lt;/li&gt;
-&lt;/ul&gt;
-
-    
-    </summary>
-    
     
   </entry>
   
