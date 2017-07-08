@@ -72,7 +72,7 @@ function build(format) {
   return rollup({
     entry: 'src/index.js',
     plugins
-  }, bundle =&gt; bundle.write({
+  }).then(bundle =&gt; bundle.write({
     dest: `dist/index.${format}.js`,
     format
   }))
