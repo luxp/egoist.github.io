@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://egoist.moe/"/>
-  <updated>2017-07-08T08:37:50.000Z</updated>
+  <updated>2017-07-08T08:44:52.000Z</updated>
   <id>https://egoist.moe/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://egoist.moe/2017/07/08/bili/"/>
     <id>https://egoist.moe/2017/07/08/bili/</id>
     <published>2017-07-08T07:13:17.000Z</published>
-    <updated>2017-07-08T08:37:50.000Z</updated>
+    <updated>2017-07-08T08:44:52.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="预习">预习</h2>
 <h3 id="rollup">Rollup</h3>
@@ -29,7 +29,7 @@
 <p>多种用途，携带方便且操作简单，意外地看起来很酷。</p>
 <h2 id="授业">授业</h2>
 <blockquote>
-<p>学生 A：道理我都懂，可是 EGOIST sensei! 为什么给 Rollup 套个皮就拿出来卖了？这根本不是编程！</p>
+<p>学生 A：道理我都懂，可是 EGOIST sensei<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>! 为什么给 Rollup 套个皮就拿出来卖了？这根本不是编程！</p>
 </blockquote>
 <p>的确这不是什么有难度、有深度的东西，只是用来解决一个简单的问题：简化打包流程，提高人类自身价值感和归属感。</p>
 <blockquote>
@@ -111,6 +111,13 @@ Promise.all(['umd', 'cjs', 'es', 'umdCompress'].map(build))
 <h2 id="放课后">放课后</h2>
 <p>放学后同学们都会到家跃跃欲试，打开电脑，发明了 <a href="https://github.com/egoist/bili" target="_blank" rel="external">Bili</a> <a href="https://github.com/egoist/bili/releases/tag/v0.17.0" target="_blank" rel="external">v0.17</a> 的数个 breaking changes，当然都是花一分钟就能搞定的变更。</p>
 <p>从此，大家过让了幸福的打包生活。</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>日语中老师(センセイ)的意思，由女高中生说出来时才可充分表现语言的张力。 <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
 ]]></content>
     
     <summary type="html">

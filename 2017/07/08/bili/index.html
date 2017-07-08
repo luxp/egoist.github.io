@@ -1,11 +1,11 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Bili: 打包 JS 库的瑞士军刀</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.3.3" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.3.3"><link rel="stylesheet" href="/css/zoom.css?v=4.3.3"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Bili: 打包 JS 库的瑞士军刀"><meta name="description" content="基于 Rollup 的打包工具"><meta name="twitter:description" content="基于 Rollup 的打包工具"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Bili: 打包 JS 库的瑞士军刀</h2><h2 class="post-subtitle">基于 Rollup 的打包工具</h2><script></script><div class="post-content markdown-body"><h2 id="预习">预习</h2>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Bili: 打包 JS 库的瑞士军刀</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.4.0" rel="stylesheet"><link rel="stylesheet" href="/css/highlight.css?v=4.4.0"><link rel="stylesheet" href="/css/zoom.css?v=4.4.0"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Bili: 打包 JS 库的瑞士军刀"><meta name="description" content="基于 Rollup 的打包工具"><meta name="twitter:description" content="基于 Rollup 的打包工具"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Bili: 打包 JS 库的瑞士军刀</h2><h2 class="post-subtitle">基于 Rollup 的打包工具</h2><script></script><div class="post-content markdown-body"><h2 id="预习">预习</h2>
 <h3 id="rollup">Rollup</h3>
 <p><a href="https://github.com/rollup/rollup" target="_blank" rel="external">Rollup</a> 类似 <a href="https://webpack.js.org" target="_blank" rel="external">Webpack</a>/Browserify 之类的打包工具，但是打包出来的文件更小，即便是和 Webpack 3 相比。除此之外 Rollup 主要用于打包 library 并且拥有非常简单的 API 接口。</p>
 <h3 id="瑞士军刀">瑞士军刀</h3>
 <p>多种用途，携带方便且操作简单，意外地看起来很酷。</p>
 <h2 id="授业">授业</h2>
 <blockquote>
-<p>学生 A：道理我都懂，可是 EGOIST sensei! 为什么给 Rollup 套个皮就拿出来卖了？这根本不是编程！</p>
+<p>学生 A：道理我都懂，可是 EGOIST sensei<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>! 为什么给 Rollup 套个皮就拿出来卖了？这根本不是编程！</p>
 </blockquote>
 <p>的确这不是什么有难度、有深度的东西，只是用来解决一个简单的问题：简化打包流程，提高人类自身价值感和归属感。</p>
 <blockquote>
@@ -87,10 +87,17 @@ Promise.all(['umd', 'cjs', 'es', 'umdCompress'].map(build))
 <h2 id="放课后">放课后</h2>
 <p>放学后同学们都会到家跃跃欲试，打开电脑，发明了 <a href="https://github.com/egoist/bili" target="_blank" rel="external">Bili</a> <a href="https://github.com/egoist/bili/releases/tag/v0.17.0" target="_blank" rel="external">v0.17</a> 的数个 breaking changes，当然都是花一分钟就能搞定的变更。</p>
 <p>从此，大家过让了幸福的打包生活。</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>日语中老师(センセイ)的意思，由女高中生说出来时才可充分表现语言的张力。 <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
 </div><div id="disqus_thread" class="disqus"></div><script>window.isPost = true;
 var disqus_config = function () {
   this.page.url = 'https://egoist.moe/2017/07/08/bili/'; // Replace PAGE_URL with your page's canonical URL variable
   this.page.identifier = '2017/07/08/bili/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/bili.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><span class="hide-on-mobile"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">CC BY-NC-ND 4.0</a></span><span>&copy;</span><span><a href="https://github.com/egoist">E.Z.</a></span><span class="hide-on-mobile coding-support">Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages.</a></span><span class="hide-on-mobile"><a href="https://github.com/egoist/blog">Read the source code.</a></span></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 ga('create', 'UA-54857209-6', 'auto');
-ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.3.3"></script><script src="/js/zoom.js?v=4.3.3"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.3.3"></script></body></html>
+ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.4.0"></script><script src="/js/zoom.js?v=4.4.0"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.4.0"></script></body></html>
