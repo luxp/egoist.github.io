@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>用 canvas 画一个聊天消息</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.3" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.3"><link rel="stylesheet" href="/css/zoom.css?v=4.6.3"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="用 canvas 画一个聊天消息"><meta name="description" content="看了你就学不会 canvas 了"><meta name="twitter:description" content="看了你就学不会 canvas 了"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">用 canvas 画一个聊天消息</h2><h2 class="post-subtitle">看了你就学不会 canvas 了</h2><script></script><div class="post-content markdown-body"><p>我不是个太求上进的人，对大多数事物都是浅尝辄止，喜欢卖弄自己一些一知半解的技巧。</p>
+<p>对于 canvas 我不甚了解，因为自己平时没有能用到的地方（毕竟这在我的舒适区之外）。今天我对一个感兴趣已久的表情包再度萌生了兴趣，比如其中一个：</p>
+<img src="https://i.loli.net/2017/09/15/59bbde6f0df7c.jpeg" alt="sticker" width="300">
+<p>于是想用 canvas 自动从用户输入的内容中生成一个，虽然我基本没用过 canvas 不过基于以前做 <a href="https://egoist.moe/slogan/">slogan</a> 的经验我还是开始了。</p>
+<p>首先得新建一个 canvas 元素我还是记得的，然后获取它的 2d context:</p>
+<pre><code class="language-js">const $canvas = document.getElementById('canvas')
+const ctx = $canvas.getContext('2d')
+</code></pre>
+<p>然后开始渲染，对于左边的头像我是暂时忽略的，毕竟我不记得怎么渲染图片了，于是先从其它的文字开始吧，我需要渲染一个用户名和右边的日期:</p>
+<pre><code class="language-js">// 其实我也不记得怎么渲染文字了
+// Google 了一下发现是 ctx.fillText(text, x, y)
+ctx.fillText('EGOIST', 50, 10)
+// 我给左边头像预留 50 像素
+</code></pre>
+<p>它的效果是:</p>
+<p><img src="https://i.loli.net/2017/09/15/59bbe0f394e51.png" alt="p1"></p>
+<p>原图里的用户名好像是蓝色加粗未知名字体，那我也搜搜改颜色和字体的 API 吧:</p>
+<pre><code class="language-js">ctx.font = 'bold 14px sans-serif'
+ctx.fillStyle = 'blue'
+</code></pre>
+<p><img src="https://i.loli.net/2017/09/15/59bbe259e6618.png" alt="p2"></p>
+<p>如图我是在 <code>fillText</code> 之前设置的 <code>font</code> 和 <code>fillStyle</code>，原因很明显。</p>
+<hr>
+<p>接下来要在右边渲染日期，我需要知道用户名的宽度，而我清楚地记得可以用 <code>ctx.measureText</code> 获取:</p>
+<pre><code class="language-js">const usernameWidth = ctx.measureText('EGOIST').width
+// 重新设置字体和颜色不然会和用户名一样
+ctx.font = '14px sans-serif'
+ctx.fillStyle = '#666'
+// 时期的 `x` 是用户名宽度 + 预留头像的宽度 + 时期到用户名的距离
+ctx.fillText('2017/7/7', usernameWidth + 50 + 10, 15)
+</code></pre>
+<p><img src="https://i.loli.net/2017/09/15/59bbe4404645e.png" alt="p3"></p>
+<hr>
+<p>接下来是消息的主体内容，它可能是多行的而 canvas 无法自动换行，我们需要根据换行符 <code>\n</code> 手动识别:</p>
+<pre><code class="language-js">const content = `hello world
+goodbye world`
+
+content.split('\n').forEach((text, index) =&gt; {
+  ctx.fillText(
+    text, 
+    // 预留头像的宽度
+    50,
+    // content 距离用户名的距离 + 每一行的大概高度
+    30 + 15 * index
+  )
+})
+</code></pre>
+<p><img src="https://i.loli.net/2017/09/15/59bbe6a3a24df.png" alt="p4"></p>
+<hr>
+<p>最后只剩下头像了，这个很奇怪，我发现不能在渲染了以上内容后再渲染最左边的头像，似乎 <code>canvas</code> 是以某种<em>面向过程编程</em>的方式渲染的，总之相关操作需要在最开始进行。这个头像大概是用户提供的，所以需要一个 <code>input</code> 元素用来获取图片文件:</p>
+<pre><code class="language-html">&lt;input type=&quot;file&quot; id=&quot;avatar&quot;&gt;
+</code></pre>
+<pre><code class="language-js">document.getElementById('avatar').addEventListener('change', e =&gt; {
+  draw(e.target.files[0])
+})
+
+function draw(avatar) {
+  // draw avatar
+  const img = new Image()
+  img.onload = () =&gt; {
+    // 头像实际宽度 40
+    // 剩下 10px 是到右边的边距
+    ctx.drawImage(img, 0, 5, 40, 40)
+  }
+  img.src = URL.createObjectURL(avatar)
+
+  // ... draw the rest
+}
+</code></pre>
+<p><img src="https://i.loli.net/2017/09/15/59bbe9cc75c16.gif" alt="p5"></p>
+<hr>
+<p>完成的代码见: <a href="https://codepan.net/gist/6630c3910af4495ad06be5426db6c3f8" target="_blank" rel="external">https://codepan.net/gist/6630c3910af4495ad06be5426db6c3f8</a><br>
+用 Vue 重写的改进版本见: <a href="https://codepan.net/gist/a4d31a6dc1ac7517bd5d80dc62af1930" target="_blank" rel="external">https://codepan.net/gist/a4d31a6dc1ac7517bd5d80dc62af1930</a></p>
+<h2 id="后日谈">后日谈</h2>
+<p>这里的代码可能有问题的就是文字高度的获取方式，比如 <code>content</code> 每一行我是目测的 <code>15px</code>，这里肯定会出一些偏差，似乎也可以近似地把每一行的高度看成约等于 <code>ctx.measureText('M').width</code>，不过不知道中文是否会差的太多，应该会有更好且更优雅的方案吧。我擅长浅尝辄止，这里就不想追问了。</p>
+<p>写这篇文章的主要目的是秀出我愚蠢的写代码的方式供后人凭吊且让各位读者获取代码上的自信，你可能比我要好得多。</p>
+<img src="https://i.loli.net/2017/09/15/59bbece2a54ab.png" alt="lol" width="300">
+</div><div id="disqus_thread" class="disqus"></div><script>window.isPost = true;
+var disqus_config = function () {
+  this.page.url = 'https://egoist.moe/2017/09/15/draw-chat-message-with-canvas/'; // Replace PAGE_URL with your page's canonical URL variable
+  this.page.identifier = '2017/09/15/draw-chat-message-with-canvas/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};</script><noscript>Please enable JavaScript to view the<a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript><div class="post-report-bug">文章勘误可以直接到 <a target="_blank" href="https://github.com/egoist/blog/blob/master/source/_posts/draw-chat-message-with-canvas.md">源代码地址</a> 修改或者 <a target="_blank" href="https://github.com/egoist/blog/issues/new">提交 ISSUE</a>，感谢阅读！</div></article></section><footer class="footer"><div class="centered"><span class="hide-on-mobile"><a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">CC BY-NC-ND 4.0</a></span><span>&copy;</span><span><a href="https://github.com/egoist">E.Z.</a></span><span class="hide-on-mobile coding-support">Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages.</a></span><span class="hide-on-mobile"><a href="https://github.com/egoist/blog">Read the source code.</a></span></div></footer><div style="display:none"></div><script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-54857209-6', 'auto');
+ga('send', 'pageview');</script><script async src="https://www.google-analytics.com/analytics.js"></script><script src="/js/highlight.min.js?v=4.6.3"></script><script src="/js/zoom.js?v=4.6.3"></script><script>window.hexoLayout = "post"</script><script src="/js/app.js?v=4.6.3"></script></body></html>
