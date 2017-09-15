@@ -47,14 +47,14 @@ content.split('\n').forEach((text, index) =&gt; {
 </code></pre>
 <p><img src="https://i.loli.net/2017/09/15/59bbe6a3a24df.png" alt="p4"></p>
 <hr>
-<p>最后只剩下头像了，这个很奇怪，我发现不能在渲染了以上内容后再渲染最左边的头像，似乎 <code>canvas</code> 是以某种<em>面向过程编程</em>的方式渲染的，总之相关操作需要在最开始进行。这个头像大概是用户提供的，所以需要一个 <code>input</code> 元素用来获取图片文件:</p>
+<p>最后只剩下头像了。我知道需要一个 <code>input</code> 元素来获取图片文件，然后以某种方式让 <code>ctx</code> 能够渲染它:</p>
 <pre><code class="language-html">&lt;input type=&quot;file&quot; id=&quot;avatar&quot;&gt;
 </code></pre>
 <pre><code class="language-js">document.getElementById('avatar').addEventListener('change', e =&gt; {
   draw(e.target.files[0])
 })
 
-// 下面的内容基本是从 stackoverflow 复制的
+// 下面的内容基本是从 StackOverflow 复制的
 function draw(avatar) {
   // 画头像
   const img = new Image()
