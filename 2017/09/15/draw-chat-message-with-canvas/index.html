@@ -54,6 +54,7 @@ content.split('\n').forEach((text, index) =&gt; {
   draw(e.target.files[0])
 })
 
+// 下面的内容基本是从 stackoverflow 复制的
 function draw(avatar) {
   // draw avatar
   const img = new Image()
@@ -64,7 +65,7 @@ function draw(avatar) {
   }
   img.src = URL.createObjectURL(avatar)
 
-  // ... draw the rest
+  // ... 画其它东西
 }
 </code></pre>
 <p><img src="https://i.loli.net/2017/09/15/59bbe9cc75c16.gif" alt="p5"></p>
