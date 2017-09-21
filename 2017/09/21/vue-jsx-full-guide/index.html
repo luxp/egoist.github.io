@@ -82,7 +82,7 @@ export default {
 })
 </code></pre>
 <p>对应的 JSX 是:</p>
-<pre><code class="language-jsx">&lt;div onClick={this.click}&gt;foo&lt;/div&gt;
+<pre><code class="language-jsx">&lt;div class=&quot;foo bar&quot; onClick={this.click}&gt;foo&lt;/div&gt;
 </code></pre>
 <p>对于这种嵌套对象，你可以在 JSX 中用 camelCase 或者 kebeb-case (连字符) 来表示，换句话说这里 JSX 中的 <code>onClick</code> 也可以写成 <code>on-click</code>，前者是为了让熟悉 React JSX 的同学更方便而加入的。</p>
 <p>完整的属性列表请参考相关 <a href="https://github.com/vuejs/vue/blob/2deda3d4328eb7aea0adb0eaf01d68537ed0e0af/types/vnode.d.ts#L36-L60" target="_blank" rel="external">typing</a> 和 <a href="https://github.com/vuejs/babel-plugin-transform-vue-jsx#difference-from-react-jsx" target="_blank" rel="external">README</a>。</p>
