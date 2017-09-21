@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://egoist.moe/"/>
-  <updated>2017-09-18T06:03:57.000Z</updated>
+  <updated>2017-09-21T14:32:29.000Z</updated>
   <id>https://egoist.moe/</id>
   
   <author>
@@ -14,6 +14,201 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue JSX 使用指南</title>
+    <link href="https://egoist.moe/2017/09/21/vue-jsx-full-guide/"/>
+    <id>https://egoist.moe/2017/09/21/vue-jsx-full-guide/</id>
+    <published>2017-09-21T04:19:14.000Z</published>
+    <updated>2017-09-21T14:32:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是-jsx">什么是 JSX?</h2>
+<p>没怎么使用 React 或类似框架的同学可能不太了解 JSX，对此我不做赘述，简而言之这就是一种对 JavaScript 的补充，用来描述组件的 UI 部分，类似模板语言但它完整支持 JavaScript 本身的语言特性。</p>
+<p>参考 FaceBook <a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="external">关于 JSX 的介绍</a>。</p>
+<h2 id="转换-jsx">转换 JSX</h2>
+<p>JSX 只是对 JavaScript 的补充并没有浏览器的支持，所以你需要用 <a href="http://babeljs.io/" target="_blank" rel="external">Babel</a> 搭配 <a href="https://github.com/vuejs/babel-preset-vue" target="_blank" rel="external">babel-preset-vue</a> 来获得完整的 Vue JSX 功能。</p>
+<h2 id="使用-jsx">使用 JSX</h2>
+<h3 id="render-和-createelement-函数">render 和 createElement 函数</h3>
+<p>你也许对 Vue 的 template (模板) 已经很熟悉了，如果你是用了 webpack + vue-loader 之类的组合，它其实是被转换成了 <code>render</code> 函数。</p>
+<p>对于以下单文件组件:</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div&gt;{{ msg }}&lt;div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      msg: 'hello'
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre>
+<p>等同于编译后的:</p>
+<pre><code class="language-js">export default {
+  data() {
+    return {
+      msg: 'hello'
+    }
+  },
+  render() {
+    var _vm = this;
+    var _h = _vm.$createElement;
+    var _c = _vm._self._c || _h;
+    return _c('div', [_vm._v(_vm._s(_vm.msg)), _c('div')])
+  }
+}
+</code></pre>
+<p><small><em><a href="https://jsx.egoist.moe/gist/8a264502933118ee7afe811139bb52f6" target="_blank" rel="external">在线调试</a></em></small></p>
+<p>这里的 <a href="https://vuejs.org/v2/guide/render-function.html#createElement-Arguments" target="_blank" rel="external">createElement</a> 函数也经常被叫做 <code>h</code> 函数，它被用来创建一个 <a href="https://github.com/vuejs/vue/blob/dev/src/core/vdom/vnode.js" target="_blank" rel="external">vNode</a> (虚拟 DOM 节点)。你可以通过 <code>this.$createElement</code> 访问它但同时它也是 <code>render</code> 函数的第一个参数。</p>
+<p>在使用 JSX 的时候，类似 template，不过只会转换 <code>render</code> 函数中的 JSX 表达式。</p>
+<p>对于以下源代码:</p>
+<pre><code class="language-jsx">export default {
+  data() {
+    return {
+      msg: 'hello'
+    }
+  },
+  render() {
+    return &lt;div&gt;{this.msg}&lt;/div&gt;
+  }
+}
+</code></pre>
+<p>它会被转换成:</p>
+<pre><code class="language-js">export default {
+  data() {
+    return {
+      msg: 'hello'
+    };
+  },
+  render() {
+    const h = arguments[0];
+
+    return h(
+      'div',
+      null,
+      [this.msg]
+    );
+  }
+};
+</code></pre>
+<p><small><em><a href="https://jsx.egoist.moe/gist/a2bda79dfa96053bc9bb5e743988796e" target="_blank" rel="external">在线调试</a></em></small></p>
+<h2 id="vue-jsx-特性">Vue JSX 特性</h2>
+<h3 id="和-react-jsx-的不同">和 React JSX 的不同</h3>
+<p>Vue JSX 中 createElement 的第二个参数 <code>data</code> 与 React 中的有些不同，它是个嵌套的对象并且每个顶层的属性由不同的模块处理，提供不同的功能，比如 <code>class</code> (在 React 中是 <code>className</code>) 和 <code>on</code> 这两个属性:</p>
+<pre><code class="language-js">createElement('div', {
+  class: ['foo', 'bar'],
+  on: {
+    click: this.click
+  },
+  ['foo']
+})
+</code></pre>
+<p>对应的 JSX 是:</p>
+<pre><code class="language-jsx">&lt;div onClick={this.click}&gt;foo&lt;/div&gt;
+</code></pre>
+<p>对于这种嵌套对象，你可以在 JSX 中用 camelCase 或者 kebeb-case (连字符) 来表示，换句话说这里 JSX 中的 <code>onClick</code> 也可以写成 <code>on-click</code>，前者是为了让熟悉 React JSX 的同学更方便而加入的。</p>
+<p>完整的属性列表请参考相关 <a href="https://github.com/vuejs/vue/blob/2deda3d4328eb7aea0adb0eaf01d68537ed0e0af/types/vnode.d.ts#L36-L60" target="_blank" rel="external">typing</a> 和 <a href="https://github.com/vuejs/babel-plugin-transform-vue-jsx#difference-from-react-jsx" target="_blank" rel="external">README</a>。</p>
+<h3 id="v-model-sup-插件页面-sup">v-model <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-v-model" target="_blank" rel="external">插件页面</a></sup></h3>
+<p>不久之前 Vue JSX 还不支持 <code>v-model</code> 因为这个转换比较复杂，感谢 <a href="https://github.com/nickmessing" target="_blank" rel="external">@nickmessing</a> 的 <a href="https://github.com/nickmessing/babel-plugin-jsx-v-model" target="_blank" rel="external">babel-plugin-jsx-v-model</a> 插件。</p>
+<p>对于一端 template:</p>
+<pre><code class="language-html">&lt;input v-model=&quot;username&quot; &gt;
+</code></pre>
+<p>对应的 JSX 是:</p>
+<pre><code class="language-jsx">&lt;input v-model={this.username} /&gt;
+</code></pre>
+<p>编译后:</p>
+<pre><code class="language-js">import _mergeJSXProps from &quot;babel-helper-vue-jsx-merge-props&quot;;
+
+var _this = this;
+
+h(
+  &quot;input&quot;,
+  _mergeJSXProps([{
+    domProps: {
+      &quot;value&quot;: _this.username
+    },
+    on: {
+      &quot;input&quot;: $event =&gt; {
+        if ($event.target.composing) return;
+        _this.username = $event.target.value;
+      }
+    }
+  }, {
+    directives: [{
+      name: &quot;model&quot;,
+      value: _this.username
+    }]
+  }]),
+  []
+);
+</code></pre>
+<p><small><em><a href="https://jsx.egoist.moe/gist/7de4ca46ae8eb69dbd861e23c4603f64" target="_blank" rel="external">在线演示</a></em></small></p>
+<p>其实在 JSX 里的 <code>v-model</code> 就是语法糖，你当然可以手动书写对应的逻辑。而这个 Babel 插件则简化了这一步骤。JSX 中的 <code>v-model</code> 拥有 template 中同样的功能。</p>
+<h3 id="事件修饰符-sup-插件页面-sup">事件修饰符 <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-event-modifiers" target="_blank" rel="external">插件页面</a></sup></h3>
+<p>template 中的键盘事件修饰符在 JSX 中也有完整的支持。</p>
+<p>这样一段 template:</p>
+<pre><code class="language-html">&lt;input @keydown.enter=&quot;handleEnter&quot;&gt;
+&lt;a @click.stop.prevent=&quot;doThat&quot;&gt;&lt;/a&gt;
+</code></pre>
+<p>对应的 JSX:</p>
+<pre><code class="language-jsx">&lt;input onKeydown:enter={this.handleEnter}&gt;
+// 多个修饰符用 `-` 连字符连接
+&lt;a onClick:stop-prevent={this.doThat}&gt;Click&lt;/a&gt;
+</code></pre>
+<p>转换之后的 JS:</p>
+<pre><code class="language-js">
+var _this = this;
+
+h(
+  &quot;a&quot;,
+  {
+    on: {
+      &quot;click&quot;: $event =&gt; {
+        $event.stopPropagation();
+        $event.preventDefault();
+
+        _this.doThat($event);
+      }
+    }
+  },
+  [&quot;Click&quot;]
+);
+</code></pre>
+<p><small><em><a href="https://jsx.egoist.moe/gist/8b99c95854d389df4772e4b677966403" target="_blank" rel="external">在线演示</a></em></small></p>
+<h3 id="functional-component-sup-插件页面-sup">functional component <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-vue-functional" target="_blank" rel="external">插件页面</a></sup></h3>
+<p>在此之前 Vue 中的 functional component 还是只能用 object 的形式表达，这个插件支持将一个纯函数转换成 Vue functional component，就像 React 中那样:</p>
+<pre><code class="language-jsx">const Message = ctx =&gt; (
+  &lt;div&gt;{ctx.props.message}&lt;/div&gt;
+)
+</code></pre>
+<p>转换后的 JS:</p>
+<pre><code class="language-js">const Message = {
+  functional: true,
+  render: (h, ctx) =&gt; h(
+    &quot;div&quot;,
+    null,
+    [ctx.props.message]
+  )
+};
+</code></pre>
+<p><small><em><a href="https://jsx.egoist.moe/gist/d4d503e7cc605b258595beda4c975a6d" target="_blank" rel="external">在线演示</a></em></small></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;什么是-jsx&quot;&gt;什么是 JSX?&lt;/h2&gt;
+&lt;p&gt;没怎么使用 React 或类似框架的同学可能不太了解 JSX，对此我不做赘述，简而言之这就是一种对 JavaScript 的补充，用来描述组件的 UI 部分，类似模板语言但它完整支持 JavaScript 本身的
+    
+    </summary>
+    
+    
+      <category term="vue" scheme="https://egoist.moe/tags/vue/"/>
+    
+      <category term="jsx" scheme="https://egoist.moe/tags/jsx/"/>
+    
+  </entry>
   
   <entry>
     <title>用 canvas 画一个聊天消息</title>
@@ -1163,83 +1358,6 @@ watch('./src/*.css', ['build:css'])
     
     
       <category term="otaku" scheme="https://egoist.moe/tags/otaku/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PostgreSQL 简明指南</title>
-    <link href="https://egoist.moe/2016/04/25/postgresql-simple-guide/"/>
-    <id>https://egoist.moe/2016/04/25/postgresql-simple-guide/</id>
-    <published>2016-04-25T09:06:05.000Z</published>
-    <updated>2016-10-01T17:21:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>边学边记录，有错请指出。（Keep Updating…）</p>
-<h2 id="span-基础-span"><span>基础</span></h2>
-<h3 id="安装">安装</h3>
-<p><code>postgresql-contrib</code> 不是必需的，它提供一些额外的功能。</p>
-<pre><code class="language-bash">$ sudo apt-get update
-$ sudo apt-get install postgresql postgresql-contrib
-</code></pre>
-<p>安装完成后，它会自动在你的系统上新建一个叫 <code>postgres</code> 的用户，之后你需要切换过去来使用 <code>PostgreSQL</code>:</p>
-<pre><code class="language-bash">$ sudo -i -u postgres
-</code></pre>
-<p>进入交互模式:</p>
-<pre><code class="language-bash">$ psql
-# 想退出则输入 `\q`
-</code></pre>
-<h3 id="初始化">初始化</h3>
-<p>用默认账户登录到默认数据库:</p>
-<pre><code class="language-bash">$ sudo -u postgres psql template1
-</code></pre>
-<p>修改默认账户的密码:</p>
-<pre><code class="language-sql">$ postgres=# ALTER USER postgres with encrypted password 'xxxxxxx';
-</code></pre>
-<p>然后修改 <code>pg_hba.conf</code> 让其用 <code>md5</code> 方式加密:</p>
-<pre><code class="language-bash"># 9.1 是版本号
-$ sudo vim /etc/postgresql/9.1/main/pg_hba.conf
-</code></pre>
-<p>这样修改: local      all     postgres     <s>peer</s> md5</p>
-<p>重启数据库:</p>
-<pre><code class="language-bash">$ sudo /etc/init.d/postgresql restart
-</code></pre>
-<h3 id="新建用户和数据库">新建用户和数据库</h3>
-<p>在默认的 Linux 账户 <code>postgres</code> 下，你可以创建创建一个新的用户:</p>
-<pre><code class="language-sql">$ postgres=# CREATE USER egoist WITH PASSWORD 'your_password';
-</code></pre>
-<p>下一步是创建一个数据库，并让指定用户据有读写权限:</p>
-<pre><code class="language-sql">$ postgres=# CREATE DATABASE database_a;
-</code></pre>
-<p>之后给予数据库 <code>database_a</code> 的权限到用户 <code>egoist</code>:</p>
-<pre><code class="language-sql">$ postgres=# GRANT ALL PRIVILEGES ON DATABASE database_a to egoist;
-</code></pre>
-<h3 id="数据库相关查询">数据库相关查询</h3>
-<h4 id="列出所有数据库">列出所有数据库</h4>
-<pre><code class="language-bash"># 当前用户
-# \l 或者 \list
-$ user=# \list
-
-# 非 psql 交互模式下
-$ psql -U username -l
-</code></pre>
-<h2 id="span-推荐阅读-span"><span>推荐阅读</span></h2>
-<ul>
-<li><a href="http://postgresguide.com" target="_blank" rel="external">PostgreSQL Guide</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;边学边记录，有错请指出。（Keep Updating…）&lt;/p&gt;
-&lt;h2 id=&quot;span-基础-span&quot;&gt;&lt;span&gt;基础&lt;/span&gt;&lt;/h2&gt;
-&lt;h3 id=&quot;安装&quot;&gt;安装&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;postgresql-contrib&lt;/code&gt; 不是必需的，
-    
-    </summary>
-    
-    
-      <category term="postgresql" scheme="https://egoist.moe/tags/postgresql/"/>
-    
-      <category term="database" scheme="https://egoist.moe/tags/database/"/>
     
   </entry>
   
