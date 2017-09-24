@@ -1,8 +1,8 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>tooling 让你从 jQuery 中解脱出来</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="tooling 让你从 jQuery 中解脱出来"><meta name="description" content="jQuery 只是个引子，泛指那些不用构建工具的 “显得很方便” 的开发方式"><meta name="twitter:description" content="jQuery 只是个引子，泛指那些不用构建工具的 “显得很方便” 的开发方式"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">tooling 让你从 jQuery 中解脱出来</h2><h2 class="post-subtitle">jQuery 只是个引子，泛指那些不用构建工具的 “显得很方便” 的开发方式</h2><script></script><div class="post-content markdown-body"><h2 id="span-起因-span"><span>起因</span></h2>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>tooling 让你从 jQuery 中解脱出来</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="tooling 让你从 jQuery 中解脱出来"><meta name="description" content="jQuery 只是个引子，泛指那些不用构建工具的 “显得很方便” 的开发方式"><meta name="twitter:description" content="jQuery 只是个引子，泛指那些不用构建工具的 “显得很方便” 的开发方式"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">tooling 让你从 jQuery 中解脱出来</h2><h2 class="post-subtitle">jQuery 只是个引子，泛指那些不用构建工具的 “显得很方便” 的开发方式</h2><script></script><div class="post-content markdown-body"><h2><span>起因</span></h2>
 <p>为什么我还需要用 jQuery？有时候我会有这样的疑惑。我觉得 jQuery 还存在于我某些小项目中的原因就是可以 “即插即用”。新建一个 <code>index.html</code>、复制一些代码、新建一个 <code>style</code> <code>script</code> 标签你就可以开始工作了，这种便利在某些时候非常好。</p>
 <p>比如刚才，我想给自己做一个用于收取捐赠的网页（也许会有开源世界的同好喜欢我的项目也说不定呢），我在 “简单粗暴一个 html 搞定” 和 “Webpack + Vue 配合各种构建工具” 之间摇摆不定。</p>
 <p>用过 Webpack 的都知道，也许配置和解决 bug 的时间会比写代码的时间更长，而且大部分情况配置文件都大同小异。那为什么不用<strong>一个配置适用多个项目</strong>？于是有了 <a href="https://github.com/egoist/tooling" target="_blank" rel="external"><code>tooling</code></a>，它其实就是用一个内置的 Webpack 配置来运行和编译指定的项目。</p>
-<h2 id="span-tooling-带来了什么？-span"><span>tooling 带来了什么？</span></h2>
+<h2><span>tooling 带来了什么？</span></h2>
 <p>也许我的表达并不直观，简而言之，tooling 让你开发的便利程度趋近直接用一个 html 搞定。</p>
 <p>tooling 内置了 Vue 和 React 的依赖，这意味着你要开发这两种框架的网页几乎是 <code>no setup</code>，新建一个项目，不用 <code>npm init</code>，不用安装任何依赖，直接：</p>
 <p><strong>index.js</strong></p>
@@ -30,7 +30,7 @@ new Vue({
 </code></pre>
 <p>然后运行 <code>tooling watch -e index</code> 就可以开着热加载模式进行开发了。</p>
 <p>并不需要配置、对开发友好、ES6、PostCSS + PreCSS、享受 Vue 单文件组件的优势、React 的 JS everywhere 的畅快，这些带给你的远不止便利。</p>
-<h2 id="span-use-case-span"><span>Use Case</span></h2>
+<h2><span>Use Case</span></h2>
 <p>如果你实在不知道这玩意能在哪些地方用，那么我告诉你吧。</p>
 <ul>
 <li>你的开源项目的 gh-pages 主页</li>

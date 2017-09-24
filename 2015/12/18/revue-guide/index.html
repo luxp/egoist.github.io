@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Revue 指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Revue 指南"><meta name="description" content="如何在 Vue 中使用 Redux 管理 State"><meta name="twitter:description" content="如何在 Vue 中使用 Redux 管理 State"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Revue 指南</h2><h2 class="post-subtitle">如何在 Vue 中使用 Redux 管理 State</h2><script></script><div class="post-content markdown-body"><h2 id="span-缘起小明-span"><span>缘起小明</span></h2>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Revue 指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Revue 指南"><meta name="description" content="如何在 Vue 中使用 Redux 管理 State"><meta name="twitter:description" content="如何在 Vue 中使用 Redux 管理 State"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Revue 指南</h2><h2 class="post-subtitle">如何在 Vue 中使用 Redux 管理 State</h2><script></script><div class="post-content markdown-body"><h2><span>缘起小明</span></h2>
 <p>前几天小明找到我，说他想用 Vue 做一个小博客，自己写点东西，可是一来就遇到问题了，他发现组件之间的状态传递十分麻烦。父子组件还好点，在 Vue 里面可以用 <code>props</code> 执行函数或者 <code>this.$broadcast</code> <code>this.$dispatch</code> 来传递状态，可是两个完全没有联系的组件要共享状态十分困难啊。</p>
 <p>他是这样说的，他在做编辑器的时候侧边栏和编辑框都想知道用户<strong>是否已经保存</strong>这个状态， 而这两个组件完全没办法通过上述的几个方法共享 state。</p>
 <p>于是小明告诉我他绞尽脑汁想到的几个方法:</p>
@@ -7,15 +7,15 @@
 <li>在这两个组件中都放置这个状态然后通过共同父组件的一个 prop 来在父组件中调用函数执行一个 <code>this.$dispatch</code> 通知子组件这个状态有改动，借此来同步各个组件中的这个状态。</li>
 </ul>
 <p>以上方法都是可行的，但是一旦组件逻辑复杂起来这样的回调啊、绑定啊、同步啊都会乱套。</p>
-<h2 id="span-历史必然-span"><span>历史必然</span></h2>
+<h2><span>历史必然</span></h2>
 <p>于是出现了 Redux !</p>
 <p>当然，Redux 不是为 Vue 出现的。不过却成为了解决所有 JavaScript 应用中状态管理的一种方案。</p>
 <p>我能做的关于 Redux 的介绍就是这样，了解更多请阅读官方<a href="https://github.com/rackt/redux" target="_blank" rel="external">自述</a>。</p>
-<h2 id="span-vue-span"><span>Vue?</span></h2>
+<h2><span>Vue?</span></h2>
 <p>也许你现在知道了 Redux 最初是因为 React 这个 View Layer Framework 而生的，React 和 Vue 一样具有组件系统，需要状态管理。</p>
 <p>那么就把 Redux 应用到 Vue 中来吧?</p>
 <p>你可以这么做，也可以使用 Vue 官方的 Flux 实现 <a href="https://github.com/vuejs/vuex" target="_blank" rel="external">Vuex</a>，它和 Redux 非常类似。几乎唯一的区别就是你需要在 action 里直接修改状态。这很好，因为 Vue 本身赞成的是 mutable state。而 Redux 中则是推荐不要修改状态而是返回一个新的状态，选择哪种看你习惯哪种。</p>
-<h2 id="span-revue-span"><span>Revue</span></h2>
+<h2><span>Revue</span></h2>
 <p>Redux 在 React 中的应用是通过 <a href="https://github.com/rackt/react-redux" target="_blank" rel="external">React-Redux</a> 来绑定的，显得十分复杂。在 Vue 中绑定 Redux 却是十分的简单：</p>
 <pre><code class="language-javascript">// 首先创建你的 reducers/actions/store
 // 然后引入 revue 和你的 store

@@ -1,16 +1,16 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>二〇一六年的前端入门指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="二〇一六年的前端入门指南"><meta name="description" content="JavaScript is supposed to be easy and powerful, for all of us."><meta name="twitter:description" content="JavaScript is supposed to be easy and powerful, for all of us."></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">二〇一六年的前端入门指南</h2><h2 class="post-subtitle">JavaScript is supposed to be easy and powerful, for all of us.</h2><script></script><div class="post-content markdown-body"><p>年初在 V2EX 看到很多人发帖问前端如何入门，我姑且来分享一下我的经验。</p>
 <p>或许你不知道我是谁，不过如果你对前端有兴趣，都可以联系我帮你 Review 代码、提供改进建议，这有我的 <a href="https://github.com/egoist" target="_blank" rel="external">GitHub</a> 地址。</p>
 <p>我假设阅读者只了解过简单的 HTML/CSS。</p>
-<h2 id="span-html-span"><span>HTML</span></h2>
+<h2><span>HTML</span></h2>
 <p>HTML 没有了 CSS 就什么都不是，它相当于给网页各个区域命名，然后让你可以进行更多的操作。比如头部导航栏，你经常会给它起个名字叫 <code>header</code>。</p>
-<h2 id="span-css-span"><span>CSS</span></h2>
+<h2><span>CSS</span></h2>
 <p>CSS 是层叠样式表（Cascading Style Sheets）的缩写，它是用来定义你的 HTML 的展现形式的一种语言。比如让你的 HTML 里的文字显示不同字体，一个元素显示不同的高度。</p>
-<h2 id="span-html-css-span"><span>HTML+CSS</span></h2>
+<h2><span>HTML+CSS</span></h2>
 <p>HTML 和 CSS 都是语法非常<strong>松散</strong>的语言，这样的导致了它们入门非常简单，然而一旦代码量变大维护就会很困难。</p>
-<h3 id="模板引擎">模板引擎</h3>
+<h3>模板引擎</h3>
 <p>假设你有两个网页，它们共用一个导航栏（header），然后只有主体（content）部分显示不同的内容，在已有知识背景下你只能做两个网页，把导航栏的代码复制两次。</p>
 <p>于是有了模板引擎，比如 <a href="https://github.com/pugjs/pug" target="_blank" rel="external">pug</a>，他可以让你复用重复的模板，减少代码量，提高可维护性。</p>
-<h3 id="css-处理器">CSS 处理器</h3>
+<h3>CSS 处理器</h3>
 <p>看下面这段代码:</p>
 <pre><code class="language-css">.post {
 	font-size: 14px;
@@ -43,11 +43,11 @@
 </code></pre>
 <p>嵌套的风格让作用域更清晰，你同时可以尽可能地只用标准的 CSS 属性然后让 CSS 处理器帮你兼容其它浏览器。推荐使用 <a href="https://github.com/postcss/postcss" target="_blank" rel="external">PostCSS</a>，它本身并不改变你的 CSS 代码，但它把你的代码抽象成一个 JavaScript 对象让你能够通过插件来随心所欲地进行操作，比如实现嵌套风格以及自动加 <code>-moz</code> <code>-webkit</code> 这些前缀。你可以自己写插件同时它已经有大量<a href="https://github.com/postcss/postcss/blob/master/docs/plugins.md" target="_blank" rel="external">现成的插件</a>供你使用。</p>
 <p>要记住的是，它只是将你<strong>自定义的 CSS 风格</strong>转换成符合浏览器标准的 CSS，至于为什么？标准的 CSS 不够好用呗，比如刚才遇到的问题。</p>
-<h2 id="span-html-css-小结-span"><span>HTML+CSS 小结</span></h2>
+<h2><span>HTML+CSS 小结</span></h2>
 <p>现在你知道了 HTML/CSS 在一起使用的时候能干什么，也知道了用模板引擎、CSS 处理器可以让你更好地写 HTML/CSS。要记住，「更好」也许只是在代码量增大的情况下更明显。</p>
 <p>那么这些模板引擎和 CSS 处理器是怎么实现的？很多都是用的 JavaScript。</p>
 <p>推荐阅读: <a href="http://learn.shayhowe.com/html-css/" target="_blank" rel="external">Learn to Code HTML &amp; CSS</a> 正如其松散的特性一样，你需要多使用才能更好地掌握用法。</p>
-<h2 id="span-javascript-span"><span>JavaScript</span></h2>
+<h2><span>JavaScript</span></h2>
 <p>JavaScript 是一门真正的语言，它简单且强大。（以下简称 JS）</p>
 <p>正如 HTML/CSS 是用于网页的样式呈现，JS （在过去）则是用于网页的交互操作上，比如用户点击了一个按钮然后弹出一个框，这些需要 JS 完成。</p>
 <p>JS 本身并不具有「监听用户点击」这一功能，在浏览器上，现代浏览器都内置了网页 DOM API，它提供了一套 JS 接口，让你可以用 JS 调用来实现相应功能，而这些功能本身是基于更低级的 C/C++ 语言实现的。</p>
@@ -59,15 +59,15 @@
 <li><a href="https://book.douban.com/subject/10546125/" target="_blank" rel="external">JavaScript 高级程序设计</a></li>
 <li><a href="http://book.douban.com/subject/3590768/" target="_blank" rel="external">JavaScript 语言精粹</a></li>
 </ul>
-<h2 id="span-node-js-span"><span>Node.js</span></h2>
+<h2><span>Node.js</span></h2>
 <p>刚才说过，过去的 JS 就是 JS 本身加上浏览器的 DOM API，于是就有人想到了：能不能把浏览器 DOM API 换成用户操作系统的 API？这样 JS 看起来就更像一门「真正的语言」，即可以在用户本地环境而不只是在浏览器中运行。</p>
 <p>幸好，谷歌浏览器（Chrome）使用的 JavaScript 运行环境（v8）发展到近几年已经能非常快地将 JS 代码转为机器码，于是 Node.js 的先驱们就成立了这个组织，基于 Chrome v8 引擎实现了一个跨平台 JavaScript 运行环境 —— 即现在非常流行的 Node.js。</p>
 <hr>
 <p>这样的感觉是不是很好? JavaScript 开发者的工具也能用 JavaScript 开发了！这才是副标题里描述的「easy and powerful」的前提。</p>
-<h3 id="如何学习-node-js">如何学习 Node.js</h3>
+<h3>如何学习 Node.js</h3>
 <p>大同小异，如果你在之前知道了如何学习 JavaScript。无非是 JS 本身加上 Node.js 提供的 API 而已。你可以直接打开 Node.js 官网查看其 API。</p>
 <p>Node.js 只是一个运行环境，类似于 Java 的 JVM，最重要的还是 JavaScript 本身。</p>
-<h2 id="span-es6-span"><span>ES6</span></h2>
+<h2><span>ES6</span></h2>
 <p>很大的可能你现在都是在用 ES5 标准的 JavaScript 语法，而 ES6 则是 TC39(负责制定 JavaScript 语言标准的机构) 在 2015 年新推出的语言标准。</p>
 <p><strong>为什么我要学新的 ES6 标准?</strong></p>
 <ul>

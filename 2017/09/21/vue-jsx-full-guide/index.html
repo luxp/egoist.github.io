@@ -1,10 +1,10 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Vue JSX 使用指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Vue JSX 使用指南"><meta name="description" content="JSX 相关专利归 NoFaceBoooooooooook 所有"><meta name="twitter:description" content="JSX 相关专利归 NoFaceBoooooooooook 所有"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Vue JSX 使用指南</h2><h2 class="post-subtitle">JSX 相关专利归 NoFaceBoooooooooook 所有</h2><script></script><div class="post-content markdown-body"><h2 id="什么是-jsx">什么是 JSX?</h2>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Vue JSX 使用指南</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Vue JSX 使用指南"><meta name="description" content="JSX 相关专利归 NoFaceBoooooooooook 所有"><meta name="twitter:description" content="JSX 相关专利归 NoFaceBoooooooooook 所有"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Vue JSX 使用指南</h2><h2 class="post-subtitle">JSX 相关专利归 NoFaceBoooooooooook 所有</h2><script></script><div class="post-content markdown-body"><h2>什么是 JSX?</h2>
 <p>没怎么使用 React 或类似框架的同学可能不太了解 JSX，对此我不做赘述，简而言之这就是一种对 JavaScript 的补充，用来描述组件的 UI 部分，类似模板语言但它完整支持 JavaScript 本身的语言特性。</p>
 <p>参考 FaceBook <a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="external">关于 JSX 的介绍</a>。</p>
-<h2 id="转换-jsx">转换 JSX</h2>
+<h2>转换 JSX</h2>
 <p>JSX 只是对 JavaScript 的补充并没有浏览器的支持，所以你需要用 <a href="http://babeljs.io/" target="_blank" rel="external">Babel</a> 搭配 <a href="https://github.com/vuejs/babel-preset-vue" target="_blank" rel="external">babel-preset-vue</a> 来获得完整的 Vue JSX 功能。</p>
-<h2 id="使用-jsx">使用 JSX</h2>
-<h3 id="render-和-createelement-函数">render 和 createElement 函数</h3>
+<h2>使用 JSX</h2>
+<h3>render 和 createElement 函数</h3>
 <p>你也许对 Vue 的 template (模板) 已经很熟悉了，如果你是用了 webpack + vue-loader 之类的组合，它其实是被转换成了 <code>render</code> 函数。</p>
 <p>对于以下单文件组件:</p>
 <pre><code class="language-html">&lt;template&gt;
@@ -70,8 +70,8 @@ export default {
 };
 </code></pre>
 <p><small><em><a href="https://jsx.egoist.moe/gist/a2bda79dfa96053bc9bb5e743988796e" target="_blank" rel="external">在线调试</a></em></small></p>
-<h2 id="vue-jsx-特性">Vue JSX 特性</h2>
-<h3 id="和-react-jsx-的不同">和 React JSX 的不同</h3>
+<h2>Vue JSX 特性</h2>
+<h3>和 React JSX 的不同</h3>
 <p>Vue JSX 中 createElement 的第二个参数 <code>data</code> 与 React 中的有些不同，它是个嵌套的对象并且每个顶层的属性由不同的模块处理，提供不同的功能，比如 <code>class</code> (在 React 中是 <code>className</code>) 和 <code>on</code> 这两个属性:</p>
 <pre><code class="language-js">createElement('div', {
   class: ['foo', 'bar'],
@@ -86,7 +86,7 @@ export default {
 </code></pre>
 <p>对于这种嵌套对象，你可以在 JSX 中用 camelCase 或者 kebeb-case (连字符) 来表示，换句话说这里 JSX 中的 <code>onClick</code> 也可以写成 <code>on-click</code>，前者是为了让熟悉 React JSX 的同学更方便而加入的。</p>
 <p>完整的属性列表请参考相关 <a href="https://github.com/vuejs/vue/blob/2deda3d4328eb7aea0adb0eaf01d68537ed0e0af/types/vnode.d.ts#L36-L60" target="_blank" rel="external">typing</a> 和 <a href="https://github.com/vuejs/babel-plugin-transform-vue-jsx#difference-from-react-jsx" target="_blank" rel="external">README</a>。</p>
-<h3 id="v-model-sup-插件页面-sup">v-model <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-v-model" target="_blank" rel="external">插件页面</a></sup></h3>
+<h3>v-model <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-v-model" target="_blank" rel="external">插件页面</a></sup></h3>
 <p>不久之前 Vue JSX 还不支持 <code>v-model</code> 因为这个转换比较复杂，感谢 <a href="https://github.com/nickmessing" target="_blank" rel="external">@nickmessing</a> 的 <a href="https://github.com/nickmessing/babel-plugin-jsx-v-model" target="_blank" rel="external">babel-plugin-jsx-v-model</a> 插件。</p>
 <p>对于以下 template:</p>
 <pre><code class="language-html">&lt;input v-model=&quot;username&quot; &gt;
@@ -122,7 +122,7 @@ h(
 </code></pre>
 <p><small><em><a href="https://jsx.egoist.moe/gist/7de4ca46ae8eb69dbd861e23c4603f64" target="_blank" rel="external">在线演示</a></em></small></p>
 <p>其实在 JSX 里的 <code>v-model</code> 就是语法糖，你当然可以手动书写对应的逻辑。而这个 Babel 插件则简化了这一步骤。JSX 中的 <code>v-model</code> 拥有 template 中同样的功能。</p>
-<h3 id="事件修饰符-sup-插件页面-sup">事件修饰符 <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-event-modifiers" target="_blank" rel="external">插件页面</a></sup></h3>
+<h3>事件修饰符 <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-event-modifiers" target="_blank" rel="external">插件页面</a></sup></h3>
 <p>template 中的键盘事件修饰符在 JSX 中也有完整的支持。</p>
 <p>对于以下 template:</p>
 <pre><code class="language-html">&lt;input @keydown.enter=&quot;handleEnter&quot;&gt;
@@ -153,7 +153,7 @@ h(
 );
 </code></pre>
 <p><small><em><a href="https://jsx.egoist.moe/gist/8b99c95854d389df4772e4b677966403" target="_blank" rel="external">在线演示</a></em></small></p>
-<h3 id="functional-component-sup-插件页面-sup">functional component <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-vue-functional" target="_blank" rel="external">插件页面</a></sup></h3>
+<h3>functional component <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-vue-functional" target="_blank" rel="external">插件页面</a></sup></h3>
 <p>在此之前 Vue 中的 functional component 还是只能用 object 的形式表达，这个插件支持将一个纯函数转换成 Vue functional component，就像 React 中那样:</p>
 <pre><code class="language-jsx">const Message = ctx =&gt; (
   &lt;div&gt;{ctx.props.message}&lt;/div&gt;

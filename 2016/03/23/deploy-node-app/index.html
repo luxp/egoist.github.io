@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>如何部署 Node.js 应用</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="如何部署 Node.js 应用"><meta name="description" content="你告诉我还能怎么办"><meta name="twitter:description" content="你告诉我还能怎么办"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">如何部署 Node.js 应用</h2><h2 class="post-subtitle">你告诉我还能怎么办</h2><script></script><div class="post-content markdown-body"><p>当你熟悉 Node.js 之后很可能会自己写些小东西放在 VPS 上跑，比如说一个个人的 API 服务，或者是你的网站。这篇文章分享的内容不管你的 app 大小，都相对适用，因为我们的原则是「run it forever and deploy it smartly」。</p>
-<h2 id="span-上传代码-span"><span>上传代码</span></h2>
+<h2><span>上传代码</span></h2>
 <p>首先你需要的是把你的 app 代码从本地上传到 VPS，我们不可能用上个世纪的 ftp 方式上传。我们开发的时候用 git 同步本地仓库和远程仓库的代码，你一定有屡试不爽的感觉，同理，这里我们也将使用 git 来操作。</p>
 <p>以下内容都可以用 <a href="https://github.com/yyx990803/pod" target="_blank" rel="external">pod</a> 这个工具来代替，不过相应的你需要用 <a href="https://github.com/Unitech/pm2" target="_blank" rel="external">PM2</a> 来管理进程。而这里是个相对 general case。</p>
 <p>首先我们确认一下：</p>
@@ -7,13 +7,13 @@
 <li><code>/var/repo</code> - 这是 VPS 上存储 git repo 的目录</li>
 <li><code>/var/www</code> - 这是 VPS 的网站目录</li>
 </ul>
-<h3 id="在-vps-上创建一个空-repo">在 VPS 上创建一个空 repo</h3>
+<h3>在 VPS 上创建一个空 repo</h3>
 <pre><code class="language-bash">$ mkdir -p /var/repo/app.git
 $ cd /var/repo/app.git
 $ git init --bare
 </code></pre>
 <p>现在你就拥有了一个只存在版本管理功能，不包含任何 app 源文件的 git 仓库。</p>
-<h3 id="部署的钩子">部署的钩子</h3>
+<h3>部署的钩子</h3>
 <p>你需要一个钩子 <code>git hook</code>，也就是在每次本地 git push 之后让它自动把上传的文件拷贝到你的网站目录中。这里我们使用 git 内置的 <code>post-receive</code> 钩子：</p>
 <pre><code class="language-bash">$ cd hooks
 # 写入内容到这个文件
@@ -30,7 +30,7 @@ npm install
 <p>为了让你有权限执行这个文件，你需要:</p>
 <pre><code class="language-bash">$ chmod +x post-receive
 </code></pre>
-<h3 id="本地配置">本地配置</h3>
+<h3>本地配置</h3>
 <p>退出 VPS：</p>
 <pre><code class="language-bash">$ exit
 </code></pre>
@@ -43,11 +43,11 @@ $ git commit -m &quot;deploy to server&quot;
 $ git push server master
 </code></pre>
 <p>然后检查一下 <code>/var/www/domain.com</code> 吧，你的代码都被同步过去了。</p>
-<h2 id="span-持久运行你的-app-span"><span>持久运行你的 app</span></h2>
+<h2><span>持久运行你的 app</span></h2>
 <p>你需要持久化运行你的 app，因为它很可能在高峰时段 crash 掉，同时你也希望在系统重启之后你的 app 也能自动重启。</p>
 <p>你大可参考 <a href="http://support.ghost.org/deploying-ghost/#making-ghost-run-forever" target="_blank" rel="external">Ghost 部署指南</a> 来达到这个目的。非常完整，我就不再赘述，不过我推荐使用 Supervisor。</p>
 <p>你也可以考虑使用 <a href="https://nodejs.org/en/docs/guides/nodejs-docker-webapp/" target="_blank" rel="external">docker</a> 这个更现代(?)的解决方案。</p>
-<h2 id="span-延伸阅读-span"><span>延伸阅读</span></h2>
+<h2><span>延伸阅读</span></h2>
 <ul>
 <li><a href="https://certsimple.com/blog/deploy-node-on-linux" target="_blank" rel="external">How to deploy your node app on Linux, 2016 edition</a></li>
 <li><a href="https://www.terlici.com/2015/06/20/running-node-forever.html" target="_blank" rel="external">Running your Node &amp; Express apps forever, no matter what, with Systemd and PM2</a></li>

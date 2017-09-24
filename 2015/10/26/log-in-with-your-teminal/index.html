@@ -1,8 +1,8 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>在终端里使用第三方登录</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="在终端里使用第三方登录"><meta name="description" content="显然你经常在网页和 APP 里使用第三方登录功能，比如用微博登录、用 QQ 登录、用 GitHub 登录，具体的方式是打开相关网页进行授权或者移动端可以利用应用内授权机制授权，那么在终端里如何操作第三"><meta name="twitter:description" content="显然你经常在网页和 APP 里使用第三方登录功能，比如用微博登录、用 QQ 登录、用 GitHub 登录，具体的方式是打开相关网页进行授权或者移动端可以利用应用内授权机制授权，那么在终端里如何操作第三"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">在终端里使用第三方登录</h2><script></script><div class="post-content markdown-body"><p>显然你经常在网页和 APP 里使用第三方登录功能，比如用微博登录、用 QQ 登录、用 GitHub 登录，具体的方式是打开相关网页进行授权或者移动端可以利用应用内授权机制授权，那么在终端里如何操作第三方账号登录呢？</p>
 <p>很显然，也只能通过打开授权网页的方式获取需要的 access token 来进行操作。</p>
-<h2 id="span-新建一个应用-span"><span>新建一个应用</span></h2>
+<h2><span>新建一个应用</span></h2>
 <p>常规步骤，稍后会用在这里获得的 <code>Client ID</code> 和 <code>Client Secret</code> 进行授权验证。</p>
-<h2 id="span-思路-span"><span>思路</span></h2>
+<h2><span>思路</span></h2>
 <p>这些操作需要你将 API 搭建在自己的服务器上并且拥有数据库读写功能。</p>
 <p>你需要用户触发登录操作之后以 GET 的方式打开一个授权网页，比如 <code>/api/login</code>，请求时在 URL Query String 中传输一个随机生成的用户 Unique ID，形如 <code>/api/login?uid=$UID</code>，推荐使用 <a href="https://www.npmjs.org/package/open" target="_blank" rel="external">open</a> 这个库打开网址。</p>
 <p>授权成功之后获得的 access token 和 UID 保存到数据库，在之前打开授权页面的同时 POST 请求 <code>/api/token</code>，在 body 中传输 UID 信息，设置一个较高的 timeout 让网页不会返回超时。</p>

@@ -22,13 +22,13 @@
     <published>2017-09-21T04:19:14.000Z</published>
     <updated>2017-09-21T14:52:37.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="什么是-jsx">什么是 JSX?</h2>
+    <content type="html"><![CDATA[<h2>什么是 JSX?</h2>
 <p>没怎么使用 React 或类似框架的同学可能不太了解 JSX，对此我不做赘述，简而言之这就是一种对 JavaScript 的补充，用来描述组件的 UI 部分，类似模板语言但它完整支持 JavaScript 本身的语言特性。</p>
 <p>参考 FaceBook <a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="external">关于 JSX 的介绍</a>。</p>
-<h2 id="转换-jsx">转换 JSX</h2>
+<h2>转换 JSX</h2>
 <p>JSX 只是对 JavaScript 的补充并没有浏览器的支持，所以你需要用 <a href="http://babeljs.io/" target="_blank" rel="external">Babel</a> 搭配 <a href="https://github.com/vuejs/babel-preset-vue" target="_blank" rel="external">babel-preset-vue</a> 来获得完整的 Vue JSX 功能。</p>
-<h2 id="使用-jsx">使用 JSX</h2>
-<h3 id="render-和-createelement-函数">render 和 createElement 函数</h3>
+<h2>使用 JSX</h2>
+<h3>render 和 createElement 函数</h3>
 <p>你也许对 Vue 的 template (模板) 已经很熟悉了，如果你是用了 webpack + vue-loader 之类的组合，它其实是被转换成了 <code>render</code> 函数。</p>
 <p>对于以下单文件组件:</p>
 <pre><code class="language-html">&lt;template&gt;
@@ -94,8 +94,8 @@ export default {
 };
 </code></pre>
 <p><small><em><a href="https://jsx.egoist.moe/gist/a2bda79dfa96053bc9bb5e743988796e" target="_blank" rel="external">在线调试</a></em></small></p>
-<h2 id="vue-jsx-特性">Vue JSX 特性</h2>
-<h3 id="和-react-jsx-的不同">和 React JSX 的不同</h3>
+<h2>Vue JSX 特性</h2>
+<h3>和 React JSX 的不同</h3>
 <p>Vue JSX 中 createElement 的第二个参数 <code>data</code> 与 React 中的有些不同，它是个嵌套的对象并且每个顶层的属性由不同的模块处理，提供不同的功能，比如 <code>class</code> (在 React 中是 <code>className</code>) 和 <code>on</code> 这两个属性:</p>
 <pre><code class="language-js">createElement('div', {
   class: ['foo', 'bar'],
@@ -110,7 +110,7 @@ export default {
 </code></pre>
 <p>对于这种嵌套对象，你可以在 JSX 中用 camelCase 或者 kebeb-case (连字符) 来表示，换句话说这里 JSX 中的 <code>onClick</code> 也可以写成 <code>on-click</code>，前者是为了让熟悉 React JSX 的同学更方便而加入的。</p>
 <p>完整的属性列表请参考相关 <a href="https://github.com/vuejs/vue/blob/2deda3d4328eb7aea0adb0eaf01d68537ed0e0af/types/vnode.d.ts#L36-L60" target="_blank" rel="external">typing</a> 和 <a href="https://github.com/vuejs/babel-plugin-transform-vue-jsx#difference-from-react-jsx" target="_blank" rel="external">README</a>。</p>
-<h3 id="v-model-sup-插件页面-sup">v-model <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-v-model" target="_blank" rel="external">插件页面</a></sup></h3>
+<h3>v-model <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-v-model" target="_blank" rel="external">插件页面</a></sup></h3>
 <p>不久之前 Vue JSX 还不支持 <code>v-model</code> 因为这个转换比较复杂，感谢 <a href="https://github.com/nickmessing" target="_blank" rel="external">@nickmessing</a> 的 <a href="https://github.com/nickmessing/babel-plugin-jsx-v-model" target="_blank" rel="external">babel-plugin-jsx-v-model</a> 插件。</p>
 <p>对于以下 template:</p>
 <pre><code class="language-html">&lt;input v-model=&quot;username&quot; &gt;
@@ -146,7 +146,7 @@ h(
 </code></pre>
 <p><small><em><a href="https://jsx.egoist.moe/gist/7de4ca46ae8eb69dbd861e23c4603f64" target="_blank" rel="external">在线演示</a></em></small></p>
 <p>其实在 JSX 里的 <code>v-model</code> 就是语法糖，你当然可以手动书写对应的逻辑。而这个 Babel 插件则简化了这一步骤。JSX 中的 <code>v-model</code> 拥有 template 中同样的功能。</p>
-<h3 id="事件修饰符-sup-插件页面-sup">事件修饰符 <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-event-modifiers" target="_blank" rel="external">插件页面</a></sup></h3>
+<h3>事件修饰符 <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-event-modifiers" target="_blank" rel="external">插件页面</a></sup></h3>
 <p>template 中的键盘事件修饰符在 JSX 中也有完整的支持。</p>
 <p>对于以下 template:</p>
 <pre><code class="language-html">&lt;input @keydown.enter=&quot;handleEnter&quot;&gt;
@@ -177,7 +177,7 @@ h(
 );
 </code></pre>
 <p><small><em><a href="https://jsx.egoist.moe/gist/8b99c95854d389df4772e4b677966403" target="_blank" rel="external">在线演示</a></em></small></p>
-<h3 id="functional-component-sup-插件页面-sup">functional component <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-vue-functional" target="_blank" rel="external">插件页面</a></sup></h3>
+<h3>functional component <sup><a href="https://github.com/nickmessing/babel-plugin-jsx-vue-functional" target="_blank" rel="external">插件页面</a></sup></h3>
 <p>在此之前 Vue 中的 functional component 还是只能用 object 的形式表达，这个插件支持将一个纯函数转换成 Vue functional component，就像 React 中那样:</p>
 <pre><code class="language-jsx">const Message = ctx =&gt; (
   &lt;div&gt;{ctx.props.message}&lt;/div&gt;
@@ -198,8 +198,9 @@ h(
     
     <summary type="html">
     
-      &lt;h2 id=&quot;什么是-jsx&quot;&gt;什么是 JSX?&lt;/h2&gt;
-&lt;p&gt;没怎么使用 React 或类似框架的同学可能不太了解 JSX，对此我不做赘述，简而言之这就是一种对 JavaScript 的补充，用来描述组件的 UI 部分，类似模板语言但它完整支持 JavaScript 本身的
+      &lt;h2&gt;什么是 JSX?&lt;/h2&gt;
+&lt;p&gt;没怎么使用 React 或类似框架的同学可能不太了解 JSX，对此我不做赘述，简而言之这就是一种对 JavaScript 的补充，用来描述组件的 UI 部分，类似模板语言但它完整支持 JavaScript 本身的语言特性。&lt;/p&gt;
+&lt;p&gt;
     
     </summary>
     
@@ -293,7 +294,7 @@ function draw(avatar) {
 <p>完成的代码见: <a href="https://codepan.net/gist/6630c3910af4495ad06be5426db6c3f8" target="_blank" rel="external">https://codepan.net/gist/6630c3910af4495ad06be5426db6c3f8</a><br>
 用 Vue 写的原始版本见: <a href="https://codepan.net/gist/a4d31a6dc1ac7517bd5d80dc62af1930" target="_blank" rel="external">https://codepan.net/gist/a4d31a6dc1ac7517bd5d80dc62af1930</a><br>
 网站: <a href="https://chat-meme.egoist.moe" target="_blank" rel="external">https://chat-meme.egoist.moe</a></p>
-<h2 id="后日谈">后日谈</h2>
+<h2>后日谈</h2>
 <p>这里的代码可能有问题的就是文字高度的获取方式，比如 <code>content</code> 每一行的高度我是目测的 <code>15</code>，这里肯定会出一些偏差，似乎也可以近似地把每一行的高度看成约等于 <code>ctx.measureText('M').width</code>，不过不知道中文是否会差的太多，应该会有更好且更优雅的方案吧。我擅长浅尝辄止，这里就不想追问了。</p>
 <p>写这篇文章的主要目的是秀出我愚蠢的写代码的方式供后人凭吊且让各位读者获取代码上的自信，你可能比我要好得多。</p>
 <img src="https://i.loli.net/2017/09/15/59bbece2a54ab.png" alt="lol" width="300">
@@ -321,12 +322,12 @@ function draw(avatar) {
     <published>2017-07-08T07:13:17.000Z</published>
     <updated>2017-07-08T09:37:59.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="预习">预习</h2>
-<h3 id="rollup">Rollup</h3>
+    <content type="html"><![CDATA[<h2>预习</h2>
+<h3>Rollup</h3>
 <p><a href="https://github.com/rollup/rollup" target="_blank" rel="external">Rollup</a> 类似 <a href="https://webpack.js.org" target="_blank" rel="external">Webpack</a>/Browserify 之类的打包工具，但是打包出来的文件更小，即便是和 Webpack 3 相比。除此之外 Rollup 主要用于打包 library 并且拥有非常简单的 API 接口。</p>
-<h3 id="瑞士军刀">瑞士军刀</h3>
+<h3>瑞士军刀</h3>
 <p>多种用途，携带方便且操作简单，意外地看起来很酷。</p>
-<h2 id="授业">授业</h2>
+<h2>授业</h2>
 <blockquote>
 <p>学生 A：道理我都懂，可是 EGOIST sensei<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>! 为什么给 Rollup 套个皮就拿出来卖了？这根本不是编程！</p>
 </blockquote>
@@ -407,7 +408,7 @@ Promise.all(['umd', 'cjs', 'es', 'umdCompress'].map(build))
 </code></pre>
 <p>就是以上这样的感觉，Bili 最近被中国超高校级的计算机协会授予了节能减排倡导先锋和键盘寿命拯救者的光荣称号，以及还有人类脑细胞的救星、键盘手杀手、让正太和萝莉也很容易地打包了这些市井称号。</p>
 <p><a href="https://github.com/search?l=JSON&amp;o=desc&amp;q=bili+scripts+build&amp;s=indexed&amp;type=Code&amp;utf8=%E2%9C%93" target="_blank" rel="external">Bili 被大量使用在我的前端库中</a>，有人会问那 CSS 以及图片、字体什么的怎么办，对于 CSS 我一般不会打包，直接原样交给用户。而字体、图片什么的一般也都是 CSS 里用的，自然同理。当然，我暂时还没有遇到需要字体和图片的情况。</p>
-<h2 id="放课后">放课后</h2>
+<h2>放课后</h2>
 <p>放学后同学们都会到家跃跃欲试，打开电脑，发现了 <a href="https://github.com/egoist/bili" target="_blank" rel="external">Bili</a> <a href="https://github.com/egoist/bili/releases/tag/v0.17.0" target="_blank" rel="external">v0.17</a> 的数个 breaking changes，当然都是花一分钟就能搞定的变更。</p>
 <p>从此，大家过上了幸福的打包生活。</p>
 <hr class="footnotes-sep">
@@ -421,9 +422,9 @@ Promise.all(['umd', 'cjs', 'es', 'umdCompress'].map(build))
     
     <summary type="html">
     
-      &lt;h2 id=&quot;预习&quot;&gt;预习&lt;/h2&gt;
-&lt;h3 id=&quot;rollup&quot;&gt;Rollup&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/rollup/rollup&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Rollup&lt;/a&gt; 类似 &lt;
+      &lt;h2&gt;预习&lt;/h2&gt;
+&lt;h3&gt;Rollup&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/rollup/rollup&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Rollup&lt;/a&gt; 类似 &lt;a href=&quot;https://webp
     
     </summary>
     
@@ -441,7 +442,7 @@ Promise.all(['umd', 'cjs', 'es', 'umdCompress'].map(build))
 <p>这篇文章也是这个道理，想介绍一下我在半年前开始做的脚手架工具。给文章起标题也是一件很困难的事，最开始想到的是「史上最优雅的脚手架工具」、「来自未来的脚手架」，不过这些未免显得太标题党了，华而不实我自己都很尴尬。最近我刚好做了个<a href="https://github.com/egoist/evangelion-card" target="_blank" rel="external">新世纪福音战士标题卡生成器</a>，于是就随机将几个关键词组合在一起 —— <strong>新世纪福音脚手架</strong>，意外地显得还不错。</p>
 <p><img src="https://ooo.0o0.ooo/2017/05/21/5921898822cae.png" alt="sao"></p>
 <p><strong>为了不让你对标题不明所以，简单地说明了它的来历，以下才是正文。</strong></p>
-<h2 id="脚手架">脚手架</h2>
+<h2>脚手架</h2>
 <p>经常造轮子就会发现脚手架的重要性，这也是为什么 Yeoman 的发明者之一是 <a href="https://github.com/sindresorhus" target="_blank" rel="external">@sindresorhus</a> 的原因。后者已经在 npm 上发布了<a href="https://www.npmjs.com/~sindresorhus" target="_blank" rel="external">超过 1000 个模块</a>，很难后有来者了。</p>
 <p>Yeoman 十分健壮，生态繁荣，然而要写<a href="https://github.com/sindresorhus/generator-nm/blob/master/app/index.js" target="_blank" rel="external">一个 generator 的复杂度</a>和写普通的代码几乎是差不多的，而我在能尽可能减少思考的时候就想减少思考，vue-cli 的思路很好地解决了我想减少思考的诉求，一个 generator 中间生成文件的过程有很多步骤是可以自动解决的。</p>
 <p>vue-cli 虽然名字里有 vue 属性，但是作为任意类型项目的脚手架工具都是可以的，尽管运行 <code>vue init react</code> 这样的命令会显得有些奇怪。这也是为什么我做了 <a href="https://github.com/egoist/sao" target="_blank" rel="external">SAO</a> 的原因，一个类似 vue-cli 的脚手架工具。在拥有 vue-cli 的功能的同时，它也能像 Yeoman 一样用 npm package 作为模板并支持测试。</p>
@@ -478,7 +479,7 @@ Promise.all(['umd', 'cjs', 'es', 'umdCompress'].map(build))
 <li>npm 模块名(自动加上 <code>template-</code> 前缀)，比如 <code>vue</code> 将会使用 npm 上的 <code>template-vue</code> 这个包。</li>
 </ul>
 <p>而第二个参数是可选的，不存在时将会生成文件到工作区目录（当前目录），否则将会生成到指定的文件夹中。</p>
-<h2 id="测试脚手架">测试脚手架</h2>
+<h2>测试脚手架</h2>
 <p>当脚手架变得复杂，你需要系统地测试以便让其在各种情况下都能生成正确的文件。对于一个脚手架，能从用户影响到它的变量只有 <code>prompts</code> 这个参数，也就是从用户获取的信息。而 SAO 的测试也主要是围绕这个来的，你可以模拟用户输入来检测生成结果。</p>
 <p>📄 <strong>template-vue/test.js:</strong></p>
 <pre><code class="language-js">import test from 'ava'
@@ -519,7 +520,7 @@ test('ignore pwa entry', async t =&gt; {
   // ...
 }
 </code></pre>
-<h2 id="最后">最后</h2>
+<h2>最后</h2>
 <p>分享几个我自己经常使用的模板:</p>
 <ul>
 <li><a href="https://github.com/egoist/template-nm" target="_blank" rel="external">template-nm</a>: 生成一个 npm 模块，我的所有模块都是用这个生成的。</li>
@@ -606,7 +607,7 @@ test('ignore pwa entry', async t =&gt; {
     <published>2017-04-28T13:11:32.000Z</published>
     <updated>2017-04-28T14:33:08.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="用-buble-替换-babel">用 Buble 替换 Babel</h2>
+    <content type="html"><![CDATA[<h2>用 Buble 替换 Babel</h2>
 <p><a href="http://babeljs.io/" target="_blank" rel="external">Babel</a> 可以说是编译 ES2015+ 代码到 ES5 的首要选择，它的可扩展性很高，基于插件几乎能做任何事。</p>
 <p>而 <a href="https://buble.surge.sh/guide/" target="_blank" rel="external">Buble</a> 则去掉了这种可扩展性，只会转换能够用 ES5 实现并保证性能的新特性，同时这样也让你免去配置的步骤。</p>
 <p>对于下面这段代码，你可以通过编译结果看出它们设计上的不同:</p>
@@ -667,7 +668,7 @@ Foo.prototype.walk = function walk () {
 };
 </code></pre>
 <p>总的来说 Buble 的结果可读性更强、更简洁，而且设计初衷就是为了不引入 <code>_createClass</code> 之类的 runtime。</p>
-<h2 id="async-await-和-generator-函数">async/await 和 generator 函数</h2>
+<h2>async/await 和 generator 函数</h2>
 <p>Buble 暂时不支持编译 async/await 和 generator 函数，目前有以下几个工具作为替代:</p>
 <ul>
 <li><a href="https://github.com/MatAtBread/nodent" target="_blank" rel="external">nodent</a> (性能比 babel-plugin-tranform-async-to-generator 更好)</li>
@@ -688,8 +689,8 @@ export default {
     
     <summary type="html">
     
-      &lt;h2 id=&quot;用-buble-替换-babel&quot;&gt;用 Buble 替换 Babel&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;http://babeljs.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Babel&lt;/a&gt; 可以说是编译 ES2015+ 代码到 
+      &lt;h2&gt;用 Buble 替换 Babel&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;http://babeljs.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Babel&lt;/a&gt; 可以说是编译 ES2015+ 代码到 ES5 的首要选择，它的可扩展性很高，基于插
     
     </summary>
     
@@ -721,15 +722,15 @@ new Vue({
 <p>Now we can run a single command <code>vbuild --dev</code> to replace the process above.</p>
 <p>This blog post will go into the philosophy and design decisions of the project. To learn how to use vbuild instead, please refer to the <a href="https://github.com/egoist/vbuild#readme" target="_blank" rel="external">README</a>, where you can learn the entirety of the tool’s capabilities in just a few minutes.</p>
 <p>First we’ll dive into the <a href="#background">background</a> of this project.</p>
-<h2 id="background">Background</h2>
+<h2>Background</h2>
 <p>In the past few years, bundlers like Webpack and browserify have taken over the market. Before that, Gulp had just made some progress in the process of replacing Grunt as the major build tool of front-end assets.</p>
 <p>The main reason that Gulp is replacing Grunt is the <strong>simplicity</strong> in my opinion. Who knows that I had been using PHP for years before meeting Node.js, developing and deploying PHP apps is that stupidly fast and easy.</p>
 <p>Since then, I’ve made my mind that I want to develop JavaScript apps in a simple way. At the same time, I did fall in love with <a href="https://github.com/sindresorhus/xo" target="_blank" rel="external">XO</a>, which is an ESLint wrapper that reduces the overhead of managing config files. vbuild is to Webpack as XO is to ESLint.</p>
-<h2 id="why-vue-js">Why Vue.js</h2>
+<h2>Why Vue.js</h2>
 <p>There’re similar tools like <a href="https://github.com/insin/nwb" target="_blank" rel="external">nwb</a> or <a href="https://github.com/facebookincubator/create-react-app" target="_blank" rel="external">create-react-app</a>, but vbuild is mainly for Vue.js.</p>
 <p>Despiting that vbuild has extra support for Vue’s single-file component, it actually works for all kinds of JavaScript frameworks! The <strong>no-config</strong> feature works better in Vue.js apps though.</p>
 <p>Have to note that, Vue.js itself is getting well with the idea <strong>no-config</strong>, you can use it directly in a <code>index.html</code> file, or work with any bundler, out-of-box nice development experience, hot-code reloading support, officially maintained router and state-managament library.</p>
-<h2 id="future">Future</h2>
+<h2>Future</h2>
 <p>I do have some exciting future plans for vbuild, like <a href="https://github.com/egoist/vbuild/issues/112" target="_blank" rel="external">server-side rendering support</a> (I know there’s Nuxt.js already) and better testing experience for Vue.js app.</p>
 <p>Currently you can see vbuild’s <code>run</code> option, which allows you to perform custom build process instead of running webpack:</p>
 <pre><code class="language-js">module.exports = {
@@ -881,7 +882,7 @@ new Vue({
 </ul>
 <p>等等…… 而且图片和字体文件也用 file-loader 做了处理，svg 文件则使用 raw-loader 加载。</p>
 <p>当然「直接在浏览器中编辑 JS/CSS」那种在线调试工具的方便暂时也无可替代，虽然也有 <a href="http://webpackbin.com" target="_blank" rel="external">webpackbin</a> <a href="http://esnextb.in" target="_blank" rel="external">esnextbin</a> <a href="http://requirebin.com/" target="_blank" rel="external">requirebin</a> 基于 bundler 的在线调试工具，不过我不只是想调试，也想让文件存在于我的本地磁盘里。</p>
-<h2 id="span-由来-span"><span>由来</span></h2>
+<h2><span>由来</span></h2>
 <p>任何事情都不是空穴来风，我的轮子尤其如此。我昨晚在搞一个叫做 <code>real-dom</code> 的项目，之后我才发现很类似 <a href="https://github.com/pakastin/redom" target="_blank" rel="external">redom</a>，不过当时我有个「做个 example」的需求，手动预览这些用了 babel 的项目真的挺麻烦，所以想做这样一个东西。</p>
 <p><strong>虽然我之前的那个 <a href="https://github.com/egoist/vbuild" target="_blank" rel="external">vbuild</a> 几乎能胜任这项任务，不过我之后联想到了 jsbin，就有是不是能继续往这方面发展的想法。</strong> 所以又一个轮子诞生了。</p>
 <blockquote>
@@ -909,14 +910,14 @@ new Vue({
     <updated>2016-11-16T10:06:07.000Z</updated>
     
     <content type="html"><![CDATA[<p>打包 JS 库没有打包 Web App 那样复杂，但还是可以变得更简单。</p>
-<h2 id="span-常见用例-span"><span>常见用例</span></h2>
+<h2><span>常见用例</span></h2>
 <p>一个 JS 库一般需要一个 CommonJS 版本，它不会打包 node_modules 里的模块。以及一个 UMD 版本的，用于在浏览器中直接使用，它会打包 node_modules 里的模块。</p>
 <p>使用 <a href="https://github.com/universe-denpa/bili" target="_blank" rel="external">bili</a> 一切都会变得简单，简单到只需要一条命令:</p>
 <pre><code class="language-bash">bili --format cjs --format umd --module-name MyModule
 </code></pre>
 <p>这条命令的意思是打包 <code>./src/index.js</code> 到 <code>./dist</code> 目录，并且转换成 <code>CommonJS</code> 和 <code>UMD</code> 格式的文件，其中 <code>UMD</code> 格式中模块名设定为 <code>MyModule</code>，这样在浏览器中就可以通过全局变量 <code>MyModule</code> 引用。</p>
 <p>如果你同时需要一个压缩后的 UMD 格式文件，直接加上 <code>--compress</code> 参数就能额外得到一个 <code>.min.js</code> 和它的 <code>sourcemap</code> 文件。</p>
-<h2 id="span-es2015-span"><span>ES2015</span></h2>
+<h2><span>ES2015</span></h2>
 <p>打包的一个目的就是使用 Babel 之类的转换器编译 ES next 到 ES5，bili 默认使用 <a href="https://buble.surge.sh/guide" target="_blank" rel="external">buble</a> 来转换 JavaScript 代码，相比 Babel 它更轻量。</p>
 <p>你当然也可以在 bili 中使用 babel 来编译代码，这需要用到 bili 的配置文件 <code>bili.config.js</code>:</p>
 <pre><code class="language-js">module.exports = {
@@ -926,7 +927,7 @@ new Vue({
 }
 </code></pre>
 <p>bili 是基于 <a href="https://github.com/rollup/rollup" target="_blank" rel="external">Rollup</a> 的，所以相关 Rollup 插件都可以用来编译 JS 代码。</p>
-<h2 id="span-buble-span"><span>Buble</span></h2>
+<h2><span>Buble</span></h2>
 <p>正如之前说了，默认我们使用 <code>buble</code>，你可以在配置文件中更改 buble 的配置参数:</p>
 <pre><code class="language-js">module.exports = {
   buble: {
@@ -935,17 +936,17 @@ new Vue({
 }
 </code></pre>
 <p>值得一提的是，buble 不支持 <code>async/await</code> 并且不能将 <code>generator</code> 转换成 ES5 代码，所以我们保留了 generator 代码并且用 <a href="https://github.com/leebyron/async-to-gen" target="_blank" rel="external">async-to-gen</a> 将 <code>async/await</code> 转换到 <code>generator</code>，如果用到了这两个请考虑浏览器兼容性，或者换成 babel 来编译。</p>
-<h2 id="span-watch-mode-span"><span>Watch mode</span></h2>
+<h2><span>Watch mode</span></h2>
 <p>在开发的时候编译代码没有 <code>watch</code> 模式会非常痛苦，想开启 bili 的 watch 模式可以直接加上 <code>--watch</code> 参数。</p>
-<h2 id="span-更多资料-span"><span>更多资料</span></h2>
+<h2><span>更多资料</span></h2>
 <p>bili 还内置了一些常用的 Rollup 插件，更多使用方法请参考 bili 的 <a href="https://github.com/universe-denpa/bili/wiki" target="_blank" rel="external">GitHub Wiki</a> 页面。</p>
 ]]></content>
     
     <summary type="html">
     
       &lt;p&gt;打包 JS 库没有打包 Web App 那样复杂，但还是可以变得更简单。&lt;/p&gt;
-&lt;h2 id=&quot;span-常见用例-span&quot;&gt;&lt;span&gt;常见用例&lt;/span&gt;&lt;/h2&gt;
-&lt;p&gt;一个 JS 库一般需要一个 CommonJS 版本，它不会打包 node_modules 里
+&lt;h2&gt;&lt;span&gt;常见用例&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;一个 JS 库一般需要一个 CommonJS 版本，它不会打包 node_modules 里的模块。以及一个 UMD 版本的，用于在
     
     </summary>
     
@@ -967,52 +968,52 @@ new Vue({
     
     <content type="html"><![CDATA[<p>为什么是 Sublime Text 和 VS Code 这样奇怪的组合一起说呢，因为目前为止我最喜欢这两个编辑器。当然 Atom 也非常好，如果启动速度更快的话也许我会用得更多。Sublime 的优点就是 UI 简单但不丑，也有些很不错的主题，这里面我最喜欢的就是 <a href="https://github.com/equinusocio/material-theme" target="_blank" rel="external">Material Theme</a>、<a href="https://github.com/samuelrafo/piatto" target="_blank" rel="external">Partto Theme</a> 以及 <a href="https://github.com/dempfi/ayu" target="_blank" rel="external">Ayu Theme</a>，相比之下 VS Code 的主题没那么风骚，但显得非常 「Solid」也挺耐看，不能说有个性就是了。</p>
 <p>不过不得不说， VS Code 作为编辑器的功能还是比 Sublime 强。</p>
-<h2 id="span-显示效果-span"><span>显示效果</span></h2>
-<h3 id="重新打开刚刚关闭的标签页">重新打开刚刚关闭的标签页</h3>
+<h2><span>显示效果</span></h2>
+<h3>重新打开刚刚关闭的标签页</h3>
 <p><kbd>Command</kbd> <kbd>Shift</kbd> <kbd>T</kbd></p>
-<h3 id="粘贴时自动缩进">粘贴时自动缩进</h3>
+<h3>粘贴时自动缩进</h3>
 <p><strong>Sublime</strong>: <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>V</kbd><br>
 <strong>VS Code</strong>: 不支持，但可以在粘贴后用 <kbd>Option</kbd> <kbd>Shift</kbd> <kbd>F</kbd> 替代，<a href="http://stackoverflow.com/questions/34627181/how-does-one-paste-and-indent-in-visual-studio-code" target="_blank" rel="external">查看更多</a></p>
-<h3 id="切换标签页">切换标签页</h3>
+<h3>切换标签页</h3>
 <p><kbd>Command</kbd> <kbd>Option</kbd> <kbd>←/→</kbd></p>
-<h3 id="分割编辑器">分割编辑器</h3>
+<h3>分割编辑器</h3>
 <p>也就是把一个编辑器分成两个或多个块。</p>
 <p><strong>Sublime</strong>: <kbd>Command</kbd> <kbd>Option</kbd> <kbd>1/2</kbd><br>
 <strong>VS Code</strong>: <kbd>Command</kbd> <kbd>\</kbd></p>
-<h3 id="显示-隐藏侧边栏">显示 / 隐藏侧边栏</h3>
+<h3>显示 / 隐藏侧边栏</h3>
 <p><strong>Sublime</strong>: <kbd>Command</kbd> <kbd>K B</kbd><br>
 <strong>VS Code</strong>: <kbd>Command</kbd> <kbd>B</kbd></p>
-<h2 id="span-选取内容-span"><span>选取内容</span></h2>
-<h3 id="选取光标附近的内容">选取光标附近的内容</h3>
+<h2><span>选取内容</span></h2>
+<h3>选取光标附近的内容</h3>
 <p>通常是一个单词，连按 d 会继续选取下一个相同的内容。</p>
 <p><kbd>Command</kbd> <kbd>D</kbd></p>
-<h3 id="往左-右选取一个字符">往左 / 右选取一个字符</h3>
+<h3>往左 / 右选取一个字符</h3>
 <p>通常与上一步一起使用进行更精确的选取。</p>
 <p><kbd>Shift</kbd> <kbd>←/→</kbd></p>
-<h3 id="选取光标所在的行">选取光标所在的行</h3>
+<h3>选取光标所在的行</h3>
 <p>同样，连按会继续选取下一行。</p>
 <p><strong>Sublime</strong>: <kbd>Command</kbd> <kbd>L</kbd><br>
 <strong>VS Code</strong>: <kbd>Command</kbd> <kbd>I</kbd></p>
-<h3 id="将光标移至选取的每一行末尾">将光标移至选取的每一行末尾</h3>
+<h3>将光标移至选取的每一行末尾</h3>
 <p>通常与上一步一起操作，用于多行编辑。</p>
 <p><strong>Sublime</strong>: <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>L</kbd><br>
 <strong>VS Code</strong>: <kbd>Control</kbd> <kbd>Option</kbd> <kbd>I</kbd></p>
-<h3 id="在多个位置显示光标">在多个位置显示光标</h3>
+<h3>在多个位置显示光标</h3>
 <p><strong>Sublime</strong>: <kbd>Command</kbd> <kbd>点击</kbd><br>
 <strong>VS Code</strong>: <kbd>Option</kbd> <kbd>点击</kbd></p>
-<h3 id="将光标移至行首-行尾">将光标移至行首 / 行尾</h3>
+<h3>将光标移至行首 / 行尾</h3>
 <p><kbd>Command</kbd> <kbd>←/→</kbd></p>
-<h3 id="从光标所在位置选取到行首-行尾的内容">从光标所在位置选取到行首 / 行尾的内容</h3>
+<h3>从光标所在位置选取到行首 / 行尾的内容</h3>
 <p><kbd>Command</kbd> <kbd>Shift</kbd> <kbd>←/→</kbd></p>
-<h2 id="span-查找内容-span"><span>查找内容</span></h2>
-<h3 id="搜索项目中的文件">搜索项目中的文件</h3>
+<h2><span>查找内容</span></h2>
+<h3>搜索项目中的文件</h3>
 <p><kbd>Command</kbd> <kbd>P</kbd></p>
-<h3 id="跳到指定的一行">跳到指定的一行</h3>
+<h3>跳到指定的一行</h3>
 <p><kbd>Control</kbd> <kbd>G</kbd></p>
-<h3 id="跳到函数定义">跳到函数定义</h3>
+<h3>跳到函数定义</h3>
 <p><strong>Sublime</strong>: <kbd>Command</kbd> <kbd>R</kbd></p>
-<h2 id="span-移动内容-span"><span>移动内容</span></h2>
-<h3 id="上下移动选取的内容">上下移动选取的内容</h3>
+<h2><span>移动内容</span></h2>
+<h3>上下移动选取的内容</h3>
 <p><kbd>Command</kbd> <kbd>Control</kbd> <kbd>↑/↓</kbd></p>
 ]]></content>
     
@@ -1036,7 +1037,7 @@ new Vue({
     <published>2016-08-29T08:54:30.000Z</published>
     <updated>2016-10-01T17:20:27.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="span-为什么用-npm-scripts-span"><span>为什么用 npm scripts ?</span></h2>
+    <content type="html"><![CDATA[<h2><span>为什么用 npm scripts ?</span></h2>
 <p>首先我觉得  <a href="https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8#.8wsejnq0u" target="_blank" rel="external">Why I Left Gulp and Grunt for npm Scripts</a> 里说的不用 gulp 的理由基本没有道理:</p>
 <ol>
 <li>gulp 插件质量、数量和实时性</li>
@@ -1085,7 +1086,7 @@ new Vue({
 <li>可维护性</li>
 </ol>
 <p>gulp tasks 也多了以后会变得很难维护，npm scripts 也是。解决方案是推荐写精简的 script，比如一个 script 只干一件事。或者很长很复杂的话你就需要专门放到一个 JS 文件里然后再在 npm scripts 里调用了。</p>
-<h2 id="span-nswatch-span"><span>nswatch</span></h2>
+<h2><span>nswatch</span></h2>
 <blockquote>
 <p><a href="https://github.com/egoist/nswatch" target="_blank" rel="external">https://github.com/egoist/nswatch</a></p>
 </blockquote>
@@ -1128,8 +1129,8 @@ watch('./src/*.css', ['build:css'])
     
     <summary type="html">
     
-      &lt;h2 id=&quot;span-为什么用-npm-scripts-span&quot;&gt;&lt;span&gt;为什么用 npm scripts ?&lt;/span&gt;&lt;/h2&gt;
-&lt;p&gt;首先我觉得  &lt;a href=&quot;https://medium.freecodecamp.com/why-i-left-gulp-
+      &lt;h2&gt;&lt;span&gt;为什么用 npm scripts ?&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;首先我觉得  &lt;a href=&quot;https://medium.freecodecamp.com/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853
     
     </summary>
     
@@ -1226,50 +1227,51 @@ watch('./src/*.css', ['build:css'])
     <updated>2016-10-01T17:18:29.000Z</updated>
     
     <content type="html"><![CDATA[<p>本季我在追的新番大概有 12 部之多！是今年前两季（9、8部）所不能比的，不过之前的数据其实有些水分，有些番是我写了推荐之后才开始看的 XD 所以可能不止那个数字。</p>
-<h2 id="span-周一-span"><span>周一</span></h2>
-<h3 id="弹丸论破3-未来篇">弹丸论破3 未来篇</h3>
+<h2><span>周一</span></h2>
+<h3>弹丸论破3 未来篇</h3>
 <p>完全是冲着弹丸论破第一季看的，据说新作是完全原创，总之还是怀着情怀先看一下，也许还不错呢。</p>
-<h3 id="orange橙色奇迹">orange橙色奇迹</h3>
+<h3>orange橙色奇迹</h3>
 <p>写信给十年前的自己，为了不让过去的自己做出那些让自己后悔的事！感觉是文艺版命运石之门。</p>
-<h2 id="span-周二-span"><span>周二</span></h2>
-<h3 id="灵能百分百">灵能百分百</h3>
+<h2><span>周二</span></h2>
+<h3>灵能百分百</h3>
 <p>ONE 老师另一作品，长得很像琦玉老师的双胞胎弟弟啊，动画肯定也很好看就是了。不多说了快上车吧！</p>
-<h3 id="魔装学园h-h">魔装学园H×H</h3>
+<h3>魔装学园H×H</h3>
 <p>有着和「恶魔高校DxD」同样结构的名字一眼就能看出其内涵所在了，车已经开了。</p>
-<h3 id="禁忌咒文">禁忌咒文</h3>
+<h3>禁忌咒文</h3>
 <p>女主好像我的艾莲啊，而且打斗场面也很炫酷。</p>
-<h2 id="span-周三-span"><span>周三</span></h2>
+<h2><span>周三</span></h2>
 <p>没有，陪女朋友吧。</p>
-<h2 id="span-周四-span"><span>周四</span></h2>
+<h2><span>周四</span></h2>
 <p>没有，去揉女朋友的胸吧。</p>
-<h2 id="span-周五-span"><span>周五</span></h2>
-<h3 id="弹丸论破3-绝望篇">弹丸论破3 绝望篇</h3>
+<h2><span>周五</span></h2>
+<h3>弹丸论破3 绝望篇</h3>
 <p>同之前的理由。</p>
-<h3 id="半田君传说">半田君传说</h3>
+<h3>半田君传说</h3>
 <p>看介绍像七月的坂本君，不过不是逼王，是衰王 XD</p>
-<h3 id="relife">ReLIFE</h3>
+<h3>ReLIFE</h3>
 <p>尼特族男主吃下 APTX4869 后身体回到 17 岁重新体验高中生活，合法地泡女高中生。</p>
-<h2 id="span-周六-span"><span>周六</span></h2>
-<h3 id="91days">91Days</h3>
+<h2><span>周六</span></h2>
+<h3>91Days</h3>
 <p>这是个有关复仇的故事（阴暗。</p>
-<h3 id="食戟之灵-第二季">食戟之灵 第二季</h3>
+<h3>食戟之灵 第二季</h3>
 <p>药王还有人不知道吗，我喜欢爱丽斯。</p>
-<h3 id="时间旅行少女">时间旅行少女</h3>
+<h3>时间旅行少女</h3>
 <p>我喜欢时间穿越类的，比如以前的「穿越时空的少女」。</p>
-<h2 id="span-周日-span"><span>周日</span></h2>
-<h3 id="情热传说-the-x">情热传说 the X</h3>
+<h2><span>周日</span></h2>
+<h3>情热传说 the X</h3>
 <p>ufotable 出品，经费当然不要钱。</p>
-<h3 id="days">DAYS</h3>
+<h3>DAYS</h3>
 <p>足球类的动画，看了一集我感觉足球配合相关的刻画还不错，相信会是个很燃的故事。</p>
-<h3 id="七大罪-第二季">七大罪 第二季</h3>
+<h3>七大罪 第二季</h3>
 <p>只有四集，伊丽莎白粉当成 OVA 看吧！</p>
 ]]></content>
     
     <summary type="html">
     
       &lt;p&gt;本季我在追的新番大概有 12 部之多！是今年前两季（9、8部）所不能比的，不过之前的数据其实有些水分，有些番是我写了推荐之后才开始看的 XD 所以可能不止那个数字。&lt;/p&gt;
-&lt;h2 id=&quot;span-周一-span&quot;&gt;&lt;span&gt;周一&lt;/span&gt;&lt;/h2&gt;
-&lt;h3 id=
+&lt;h2&gt;&lt;span&gt;周一&lt;/span&gt;&lt;/h2&gt;
+&lt;h3&gt;弹丸论破3 未来篇&lt;/h3&gt;
+&lt;p&gt;完全是
     
     </summary>
     
@@ -1339,7 +1341,7 @@ watch('./src/*.css', ['build:css'])
 <p>什么？我搞错了，是的，这是何等的无耻啊，这个死宅居然说自己是我女朋友的老公！</p>
 <hr>
 <p>相信到这里各位拥有忍者动态视力的客官已经看清楚了，死宅什么的就是不分青红皂白自称是我女朋友的老公的那一类人，该杀！</p>
-<h2 id="span-剧情反转-span"><span>剧情反转</span></h2>
+<h2><span>剧情反转</span></h2>
 <p>我察觉到有些不对，表达对我女朋友的向往有什么不对吗，死宅的这种精神反而值得钦佩，明知道事实不会因为自己的意淫而得到任何改变。</p>
 <p>这种精神除了刚出生的婴儿和精神病院的智障以外，上帝只给了死宅。</p>
 <p>南无三，这是何等的珍贵啊！</p>

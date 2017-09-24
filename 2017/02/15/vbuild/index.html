@@ -12,15 +12,15 @@ new Vue({
 <p>Now we can run a single command <code>vbuild --dev</code> to replace the process above.</p>
 <p>This blog post will go into the philosophy and design decisions of the project. To learn how to use vbuild instead, please refer to the <a href="https://github.com/egoist/vbuild#readme" target="_blank" rel="external">README</a>, where you can learn the entirety of the tool’s capabilities in just a few minutes.</p>
 <p>First we’ll dive into the <a href="#background">background</a> of this project.</p>
-<h2 id="background">Background</h2>
+<h2>Background</h2>
 <p>In the past few years, bundlers like Webpack and browserify have taken over the market. Before that, Gulp had just made some progress in the process of replacing Grunt as the major build tool of front-end assets.</p>
 <p>The main reason that Gulp is replacing Grunt is the <strong>simplicity</strong> in my opinion. Who knows that I had been using PHP for years before meeting Node.js, developing and deploying PHP apps is that stupidly fast and easy.</p>
 <p>Since then, I’ve made my mind that I want to develop JavaScript apps in a simple way. At the same time, I did fall in love with <a href="https://github.com/sindresorhus/xo" target="_blank" rel="external">XO</a>, which is an ESLint wrapper that reduces the overhead of managing config files. vbuild is to Webpack as XO is to ESLint.</p>
-<h2 id="why-vue-js">Why Vue.js</h2>
+<h2>Why Vue.js</h2>
 <p>There’re similar tools like <a href="https://github.com/insin/nwb" target="_blank" rel="external">nwb</a> or <a href="https://github.com/facebookincubator/create-react-app" target="_blank" rel="external">create-react-app</a>, but vbuild is mainly for Vue.js.</p>
 <p>Despiting that vbuild has extra support for Vue’s single-file component, it actually works for all kinds of JavaScript frameworks! The <strong>no-config</strong> feature works better in Vue.js apps though.</p>
 <p>Have to note that, Vue.js itself is getting well with the idea <strong>no-config</strong>, you can use it directly in a <code>index.html</code> file, or work with any bundler, out-of-box nice development experience, hot-code reloading support, officially maintained router and state-managament library.</p>
-<h2 id="future">Future</h2>
+<h2>Future</h2>
 <p>I do have some exciting future plans for vbuild, like <a href="https://github.com/egoist/vbuild/issues/112" target="_blank" rel="external">server-side rendering support</a> (I know there’s Nuxt.js already) and better testing experience for Vue.js app.</p>
 <p>Currently you can see vbuild’s <code>run</code> option, which allows you to perform custom build process instead of running webpack:</p>
 <pre><code class="language-js">module.exports = {

@@ -1,9 +1,9 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Bili: 打包 JS 库的瑞士军刀</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Bili: 打包 JS 库的瑞士军刀"><meta name="description" content="基于 Rollup 的打包工具"><meta name="twitter:description" content="基于 Rollup 的打包工具"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Bili: 打包 JS 库的瑞士军刀</h2><h2 class="post-subtitle">基于 Rollup 的打包工具</h2><script></script><div class="post-content markdown-body"><h2 id="预习">预习</h2>
-<h3 id="rollup">Rollup</h3>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><title>Bili: 打包 JS 库的瑞士军刀</title><link rel="alternate" type="application/rss+xml" title="庶民样本" href="/atom.xml"><link href="/css/main.css?v=4.6.5" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@1.205.0/distr/fira_code.min.css"><link rel="stylesheet" href="/css/highlight.css?v=4.6.5"><link rel="stylesheet" href="/css/zoom.css?v=4.6.5"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@rem_rin_rin"><meta name="twitter:title" content="Bili: 打包 JS 库的瑞士军刀"><meta name="description" content="基于 Rollup 的打包工具"><meta name="twitter:description" content="基于 Rollup 的打包工具"></head><body><header class="header"><h1 class="site-name"><a href="/">e.z.</a></h1><ul class="nav"><li><a href="/about.html">about</a></li><li><a href="/girls.html">girls</a></li><li><a href="/donate.html">donate</a></li></ul></header><section class="centered post-page"><article class="post"><h2 class="post-title">Bili: 打包 JS 库的瑞士军刀</h2><h2 class="post-subtitle">基于 Rollup 的打包工具</h2><script></script><div class="post-content markdown-body"><h2>预习</h2>
+<h3>Rollup</h3>
 <p><a href="https://github.com/rollup/rollup" target="_blank" rel="external">Rollup</a> 类似 <a href="https://webpack.js.org" target="_blank" rel="external">Webpack</a>/Browserify 之类的打包工具，但是打包出来的文件更小，即便是和 Webpack 3 相比。除此之外 Rollup 主要用于打包 library 并且拥有非常简单的 API 接口。</p>
-<h3 id="瑞士军刀">瑞士军刀</h3>
+<h3>瑞士军刀</h3>
 <p>多种用途，携带方便且操作简单，意外地看起来很酷。</p>
-<h2 id="授业">授业</h2>
+<h2>授业</h2>
 <blockquote>
 <p>学生 A：道理我都懂，可是 EGOIST sensei<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>! 为什么给 Rollup 套个皮就拿出来卖了？这根本不是编程！</p>
 </blockquote>
@@ -84,7 +84,7 @@ Promise.all(['umd', 'cjs', 'es', 'umdCompress'].map(build))
 </code></pre>
 <p>就是以上这样的感觉，Bili 最近被中国超高校级的计算机协会授予了节能减排倡导先锋和键盘寿命拯救者的光荣称号，以及还有人类脑细胞的救星、键盘手杀手、让正太和萝莉也很容易地打包了这些市井称号。</p>
 <p><a href="https://github.com/search?l=JSON&amp;o=desc&amp;q=bili+scripts+build&amp;s=indexed&amp;type=Code&amp;utf8=%E2%9C%93" target="_blank" rel="external">Bili 被大量使用在我的前端库中</a>，有人会问那 CSS 以及图片、字体什么的怎么办，对于 CSS 我一般不会打包，直接原样交给用户。而字体、图片什么的一般也都是 CSS 里用的，自然同理。当然，我暂时还没有遇到需要字体和图片的情况。</p>
-<h2 id="放课后">放课后</h2>
+<h2>放课后</h2>
 <p>放学后同学们都会到家跃跃欲试，打开电脑，发现了 <a href="https://github.com/egoist/bili" target="_blank" rel="external">Bili</a> <a href="https://github.com/egoist/bili/releases/tag/v0.17.0" target="_blank" rel="external">v0.17</a> 的数个 breaking changes，当然都是花一分钟就能搞定的变更。</p>
 <p>从此，大家过上了幸福的打包生活。</p>
 <hr class="footnotes-sep">

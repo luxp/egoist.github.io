@@ -2,7 +2,7 @@
 <p>这篇文章也是这个道理，想介绍一下我在半年前开始做的脚手架工具。给文章起标题也是一件很困难的事，最开始想到的是「史上最优雅的脚手架工具」、「来自未来的脚手架」，不过这些未免显得太标题党了，华而不实我自己都很尴尬。最近我刚好做了个<a href="https://github.com/egoist/evangelion-card" target="_blank" rel="external">新世纪福音战士标题卡生成器</a>，于是就随机将几个关键词组合在一起 —— <strong>新世纪福音脚手架</strong>，意外地显得还不错。</p>
 <p><img src="https://ooo.0o0.ooo/2017/05/21/5921898822cae.png" alt="sao"></p>
 <p><strong>为了不让你对标题不明所以，简单地说明了它的来历，以下才是正文。</strong></p>
-<h2 id="脚手架">脚手架</h2>
+<h2>脚手架</h2>
 <p>经常造轮子就会发现脚手架的重要性，这也是为什么 Yeoman 的发明者之一是 <a href="https://github.com/sindresorhus" target="_blank" rel="external">@sindresorhus</a> 的原因。后者已经在 npm 上发布了<a href="https://www.npmjs.com/~sindresorhus" target="_blank" rel="external">超过 1000 个模块</a>，很难后有来者了。</p>
 <p>Yeoman 十分健壮，生态繁荣，然而要写<a href="https://github.com/sindresorhus/generator-nm/blob/master/app/index.js" target="_blank" rel="external">一个 generator 的复杂度</a>和写普通的代码几乎是差不多的，而我在能尽可能减少思考的时候就想减少思考，vue-cli 的思路很好地解决了我想减少思考的诉求，一个 generator 中间生成文件的过程有很多步骤是可以自动解决的。</p>
 <p>vue-cli 虽然名字里有 vue 属性，但是作为任意类型项目的脚手架工具都是可以的，尽管运行 <code>vue init react</code> 这样的命令会显得有些奇怪。这也是为什么我做了 <a href="https://github.com/egoist/sao" target="_blank" rel="external">SAO</a> 的原因，一个类似 vue-cli 的脚手架工具。在拥有 vue-cli 的功能的同时，它也能像 Yeoman 一样用 npm package 作为模板并支持测试。</p>
@@ -39,7 +39,7 @@
 <li>npm 模块名(自动加上 <code>template-</code> 前缀)，比如 <code>vue</code> 将会使用 npm 上的 <code>template-vue</code> 这个包。</li>
 </ul>
 <p>而第二个参数是可选的，不存在时将会生成文件到工作区目录（当前目录），否则将会生成到指定的文件夹中。</p>
-<h2 id="测试脚手架">测试脚手架</h2>
+<h2>测试脚手架</h2>
 <p>当脚手架变得复杂，你需要系统地测试以便让其在各种情况下都能生成正确的文件。对于一个脚手架，能从用户影响到它的变量只有 <code>prompts</code> 这个参数，也就是从用户获取的信息。而 SAO 的测试也主要是围绕这个来的，你可以模拟用户输入来检测生成结果。</p>
 <p>📄 <strong>template-vue/test.js:</strong></p>
 <pre><code class="language-js">import test from 'ava'
@@ -80,7 +80,7 @@ test('ignore pwa entry', async t =&gt; {
   // ...
 }
 </code></pre>
-<h2 id="最后">最后</h2>
+<h2>最后</h2>
 <p>分享几个我自己经常使用的模板:</p>
 <ul>
 <li><a href="https://github.com/egoist/template-nm" target="_blank" rel="external">template-nm</a>: 生成一个 npm 模块，我的所有模块都是用这个生成的。</li>
